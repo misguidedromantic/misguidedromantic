@@ -1,8 +1,8 @@
 window.onload{
 let svg = d3.select("#canvas")
 .append("svg")
-.attr("height", 500)
-.attr("width",500)
+.style("height", 500)
+.style("width",500)
 
 svg.append("circle")
 .attr("cx",50)
