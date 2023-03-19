@@ -1,4 +1,4 @@
-window.onload{
+window.onload(){
   
 console.log("hello")
   
@@ -12,4 +12,5 @@ svg.append("circle")
 .attr("cy",50)
 .attr("r", 10)
 .attr("fill", "blue")
+
 }
