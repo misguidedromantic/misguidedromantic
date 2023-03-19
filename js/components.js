@@ -1,4 +1,7 @@
 window.onload{
+  
+console.log("hello")
+  
 let svg = d3.select("#canvas")
 .append("svg")
 .style("height", 500)
