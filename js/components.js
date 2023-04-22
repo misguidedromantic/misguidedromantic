@@ -51,7 +51,7 @@ class song {
     
     for (let i = 0; i < number; i++) { 
       let thisBar = new bar (timeSignature)
-      this.push(thisBar)
+      this.bars.push(thisBar)
     }
     
   }
