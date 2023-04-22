@@ -15,7 +15,7 @@ function setupSongs (){
 
 function setupGoodAfterBad (){
   let thisSong = new song ("Good After Bad")
-  thisSong.addBarSet(155, 44)
+  thisSong.addBarSet(155, "44")
   return thisSong
 }  
 
