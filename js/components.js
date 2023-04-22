@@ -13,19 +13,6 @@ function setupSongs (){
   console.log(songs)
 }
 
-function setupDisplay(){
-  setupSVGCanvas()
-  displaySong(songs.goodAfterBad)
-}
-
-function setupSVGCanvas(){
-  
-  svg = d3.select("#canvas")
-    .append("svg")
-    .attr("height", 500)
-    .attr("width",500)
-
-}
   
 function displaySong(song){
   
@@ -82,5 +69,19 @@ class bar {
     this.timeSignatureDenominator = timeSignature[1]
   }
   
+
+}
+
+function setupDisplay(){
+  setupSVGCanvas()
+  displaySong(songs.goodAfterBad)
+}
+
+function setupSVGCanvas(){
+  
+  svg = d3.select("#canvas")
+    .append("svg")
+    .attr("height", 500)
+    .attr("width",500)
 
 }
