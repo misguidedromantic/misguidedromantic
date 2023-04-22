@@ -29,10 +29,12 @@ function setupSVGCanvas(){
   
 function displaySong(song){
   
-  svg.selectAll("circle")
-    .data(song)
+  svg.selectAll("rect")
+    .data(song.bars)
     .join("rect")
-    .attr("width", d => d.bars.length)
+    .attr("x", (d, i) => i * 10)
+    .attr("y", 10)
+    .attr("width", d => d.timeSignatureNumerator)
     .attr("height", 15)
     .attr("fill", "green")
     .attr("opacity", 1)
@@ -43,7 +45,7 @@ function setupGoodAfterBad (){
   
   let thisSong = new song ("Good After Bad")
   
-  thisSong.addBarSet(155, "four-four")
+  thisSong.addBarSet(155, 44)
   
   return thisSong
   
@@ -72,7 +74,12 @@ class song {
 class bar {
   
   constructor(timeSignature){
-    this.timeSignature = timeSignature
+    this.setupTimeSignature(timeSignature) 
+  }
+  
+  setupTimeSignature(timeSignature){
+    this.timeSignatureNumerator = timeSignature[0]
+    this.timeSignatureDenominator = timeSignature[1]
   }
   
 
