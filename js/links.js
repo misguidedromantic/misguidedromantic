@@ -1,5 +1,6 @@
 let svg = {}
 let actions = {}
+let transactions = {}
 
 window.onload = function (){setup()}
 
@@ -23,38 +24,21 @@ function displayRecords(){
     console.log(actions)
   }
 
-  function renderActionCircles(){
-    
-    console.log(actions.transactions)
-    
-    let gTiebel = svg.append("g")
-      .attr("class", "tiebel")
+  function renderActions(){
+    renderCircles(actions, "action", "purple")
+  }
 
-    let gJCP = svg.append("g")
-      .attr("class", "jcp")
-  
-    gTiebel.selectAll("circle")
-      .data(actions)
-      .join("circle")
-      .attr("cx", 25)
-      .attr("cy", (d, i) => i * 25 + 25)
-      .attr("r", 5)
-      .attr("fill", "purple")
-      .attr("opacity", 1) 
-  
-    gJCP.selectAll("circle")
-      .data(actions.transactions)
-      .join("circle")
-      .attr("cx", 225)
-      .attr("cy", (d, i) => i * 25 + 25)
-      .attr("r", 5)
-      .attr("fill", "red")
-      .attr("opacity", 1) 
+  function renderTransactions(){
+    for (const [key, value] of actions.entries(actions)) {
+      console.log(key)
+    }
   }
 
   setupSVGCanvas()
   setupActions()
-  renderActionCircles()
+  renderActions()
+  renderTransactions()
+  
 
 }
 
@@ -64,5 +48,21 @@ class action {
     this.title = title
     this.transactions = transactions
   }
+  
+}
+
+function renderCircles(data, classString, colour){
+
+  let g = svg.selectAll("g." + classString)
+      .data(data)
+      .join("g")
+      .attr("class", "classString")
+   
+    g.append("circle")
+      .attr("cx", 225)
+      .attr("cy", (d, i) => i * 25 + 25)
+      .attr("r", 5)
+      .attr("fill", colour)
+      .attr("opacity", 1) 
   
 }
