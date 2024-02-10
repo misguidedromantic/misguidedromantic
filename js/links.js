@@ -20,8 +20,6 @@ function displayRecords(){
   function setupActions (){
     actions.a = new action ("A", ["change","addon1"])
     actions.b = new action ("B", ["change"])
-
-    console.log(actions)
   }
 
   function renderActions(){
@@ -34,7 +32,7 @@ function displayRecords(){
     
     while (stack?.length > 0) {
       const thisAction = stack.pop()
-      console.log(thisAction)
+      console.log(thisAction.transactions)
     }
   }
 
