@@ -102,10 +102,10 @@ function renderCircles(data, classString){
       .attr("class", classString)
    
     g.append("circle")
-      .attr("cx", 25 + offset)
-      .attr("cy", (d, i) => i * 25 + 25)
-      .attr("r", 5)
-      .attr("fill", colour)
+      .attr("cx", (d, i) => i * d.xGap + d.x1)
+      .attr("cy", (d, i) => i * d.yGap + d.y1)
+      .attr("r", d => d.r)
+      .attr("fill", d => d.colour)
       .attr("opacity", 1) 
   
 }
