@@ -1,6 +1,5 @@
 let svg = {}
 let actions = {}
-let transactions = {}
 
 window.onload = function (){setup()}
 
@@ -32,19 +31,18 @@ function displayRecords(){
 
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
-      let transactions = actions[key].transactions
-      console.log(transactions)
-      renderCircles(transactions, "transaction", "red")
+      let thisAction = actions[key]
+      
+      renderCircles(thisAction.transactions, "transaction", "red", 200)
     }
 
   }
 
   setupSVGCanvas()
   setupActions()
-  renderActions()
+  renderCircles(actions, "action", "blue", 0)
   renderTransactions()
   
-
 }
 
 class action {
@@ -56,7 +54,7 @@ class action {
   
 }
 
-function renderCircles(data, classString, colour){
+function renderCircles(data, classString, colour, offset){
 
   let g = svg.selectAll("g." + classString)
       .data(data)
@@ -64,7 +62,7 @@ function renderCircles(data, classString, colour){
       .attr("class", classString)
    
     g.append("circle")
-      .attr("cx", 225)
+      .attr("cx", 25 + offset)
       .attr("cy", (d, i) => i * 25 + 25)
       .attr("r", 5)
       .attr("fill", colour)
