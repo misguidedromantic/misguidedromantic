@@ -29,9 +29,11 @@ function displayRecords(){
   }
 
   function renderTransactions(){
-    for (const [key, value] of actions.entries(actions)) {
-      console.log(key)
+
+    for (let thisAction in actions){
+      console.log(thisAction)
     }
+    
   }
 
   setupSVGCanvas()
