@@ -31,14 +31,12 @@ function displayRecords(){
     const actionsArray = Object.keys(actions)
 
     for (let i = 0; i < actionsArray.length; i++) {
-      console.log(actionsArray[i])
+      let key = actionsArray[i]
+      let transactions = actions[key].transactions
+      console.log(transactions)
+      renderCircles(transactions, "transaction", "purple"
     }
 
-    //console.log(stack[0])
-    
-    //while (stack?.length > 0) {
-      //const thisAction = stack.pop()
-    //}
   }
 
   setupSVGCanvas()
@@ -63,7 +61,7 @@ function renderCircles(data, classString, colour){
   let g = svg.selectAll("g." + classString)
       .data(data)
       .join("g")
-      .attr("class", "classString")
+      .attr("class", classString)
    
     g.append("circle")
       .attr("cx", 225)
