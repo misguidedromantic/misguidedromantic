@@ -35,13 +35,11 @@ function displayRecords(){
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
       let thisAction = actions[key]
-      let theseTransactions = actions[key].transactions
-      renderCircles(actions[key].transactions, "transaction")
+      renderCircles(thisAction.transactions, "transaction")
     }
 
   }
 
-  setupSVGCanvas()
   setupActions()
   renderActions()
   renderTransactions()
