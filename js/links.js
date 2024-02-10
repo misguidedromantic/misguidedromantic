@@ -69,10 +69,12 @@ class action {
     switch(this.title){
       case "A":
         transactions[0] = new transaction("A1")
+        break;
 
       case "B":
         transactions[0] = new transaction("B1")
         transactions[1] = new transaction("B2")
+        break;
     }
     this.transactions = transactions
   }
