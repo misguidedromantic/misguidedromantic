@@ -72,8 +72,8 @@ class action {
         transactions[0] = new transaction("B1")
         transactions[1] = new transaction("B2")
     }
-
     this.transactions = transactions
+  }
 }
 
 class transaction {
