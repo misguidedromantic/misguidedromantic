@@ -35,7 +35,8 @@ function displayRecords(){
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
       let thisAction = actions[key]
-      renderCircles(thisAction.transactions, "transaction")
+      let classString = key + "transaction"
+      renderCircles(thisAction.transactions, classString)
     }
 
   }
