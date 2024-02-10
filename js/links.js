@@ -24,16 +24,12 @@ function displayRecords(){
   }
 
   function renderActions(){
-    //const actionsArray = Object.keys(actions)
     renderCircles(actions, "action")
   }
 
   function renderTransactions(){
 
-    //const actionsArray = Object.keys(actions)
-
     for (let i = 0; i < actions.length; i++) {
-      //let key = actionsArray[i]
       let thisAction = actions[i]
       let classString = thisAction.title + "transaction"
       renderCircles(thisAction.transactions, classString)
@@ -58,7 +54,7 @@ class action {
     this.x1 = 25
     this.y1 = 25
     this.xGap = 0
-    this.yGap = 25
+    this.yGap = 15
     this.setTransactions()
   }
 
@@ -67,13 +63,14 @@ class action {
     let transactions = []
 
     switch(this.title){
-      case "A":
-        transactions[0] = new transaction("A1")
-        break;
 
       case "B":
         transactions[0] = new transaction("B1")
         transactions[1] = new transaction("B2")
+        break;
+
+      default:
+        transactions[0] = new transaction(this.title + "1")
 
     }
     this.transactions = transactions
