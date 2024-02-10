@@ -30,10 +30,12 @@ function displayRecords(){
 
   function renderTransactions(){
 
-    for (let thisAction in actions){
-      console.log(thisAction.transactions)
-    }
+    const stack = [actions]
     
+    while (stack?.length > 0) {
+      const thisAction = stack.pop()
+      console.log(thisAction)
+    }
   }
 
   setupSVGCanvas()
