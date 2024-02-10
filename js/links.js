@@ -28,12 +28,17 @@ function displayRecords(){
 
   function renderTransactions(){
 
-    const stack = [actions]
-    
-    while (stack?.length > 0) {
-      const thisAction = stack.pop()
-      console.log(thisAction.transactions)
+    const actionsArray = Object.keys(actions)
+
+    for (let i = 0; i < actionsArray.length; i++) {
+      console.log(actionsArray[i])
     }
+
+    //console.log(stack[0])
+    
+    //while (stack?.length > 0) {
+      //const thisAction = stack.pop()
+    //}
   }
 
   setupSVGCanvas()
