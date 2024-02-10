@@ -1,12 +1,10 @@
+let svg = {}
+
 window.onload = function (){setup()}
 
 function setup(){
-  setupTransactions()
-  setupDisplay()
-}
-
-function setupTransactions(){
-  
+  setupSVGCanvas()
+  displayRecords()
 }
 
 function setupSVGCanvas(){
@@ -23,7 +21,7 @@ function displayRecords(){
   
   svg.selectAll("circle")
     .data(interactions)
-    .join("rect")
+    .join("circle")
     .attr("x", (d, i) => i * 10)
     .attr("y", 10)
     .attr("r", 10)
