@@ -24,6 +24,9 @@ function displayRecords(){
   }
 
   function renderActionCircles(){
+    
+    console.log(actions.transactions)
+    
     let gTiebel = svg.append("g")
       .attr("class", "tiebel")
 
@@ -39,7 +42,7 @@ function displayRecords(){
       .attr("fill", "purple")
       .attr("opacity", 1) 
   
-    gTiebel.selectAll("circle")
+    gJCP.selectAll("circle")
       .data(actions.transactions)
       .join("circle")
       .attr("cx", 225)
@@ -51,7 +54,7 @@ function displayRecords(){
 
   setupSVGCanvas()
   setupActions()
-  //renderActionCircles()
+  renderActionCircles()
 
 }
 
