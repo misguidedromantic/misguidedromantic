@@ -32,7 +32,7 @@ function displayRecords(){
 
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
-      let theseTransactions = [actions[key].transactions]
+      let theseTransactions = actions[key].transactions
 
       console.log(theseTransactions)
       
