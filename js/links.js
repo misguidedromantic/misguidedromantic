@@ -1,32 +1,63 @@
 let svg = {}
+let actions = {}
 
 window.onload = function (){setup()}
 
 function setup(){
-  setupSVGCanvas()
   displayRecords()
 }
 
-function setupSVGCanvas(){
-  svg = d3.select("#canvas")
-    .append("svg")
-    .attr("height", 500)
-    .attr("width",500)
-}
-
-
 function displayRecords(){
 
-  let interactions = ["a","b","c","d"]
+  function setupSVGCanvas(){
+    svg = d3.select("#canvas")
+      .append("svg")
+      .attr("height", 500)
+      .attr("width",500)
+  }
+
+  function setupActions (){
+    actions.a = new action ("A", ["change","addon1"])
+    actions.b = new action ("B", ["change"])
+  }
+
+  function renderActionCircles(){
+    let gTiebel = svg.append("g")
+      .attr("class", "tiebel")
+
+    let gJCP = svg.append("g")
+      .attr("class", "jcp")
   
-  svg.selectAll("circle")
-    .data(interactions)
-    .join("circle")
-    .attr("cx", 25)
-    .attr("cy", (d, i) => i * 25)
-    .attr("r", 10)
-    .attr("fill", "purple")
-    .attr("opacity", 1) 
-    
-    
+    gTiebel.selectAll("circle")
+      .data(actions)
+      .join("circle")
+      .attr("cx", 25)
+      .attr("cy", (d, i) => i * 25 + 25)
+      .attr("r", 5)
+      .attr("fill", "purple")
+      .attr("opacity", 1) 
+  
+    gTiebel.selectAll("circle")
+      .data(actions.transactions)
+      .join("circle")
+      .attr("cx", 225)
+      .attr("cy", (d, i) => i * 25 + 25)
+      .attr("r", 5)
+      .attr("fill", "red")
+      .attr("opacity", 1) 
+  }
+
+  setupSVGCanvas()
+  setupActions()
+  renderActionCircles()
+
+}
+
+class action {
+  
+  constructor(title, transactions){
+    this.title = title
+    this.transactions = transactions
+  }
+  
 }
