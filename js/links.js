@@ -24,8 +24,8 @@ function displayRecords(){
   }
 
   function renderActions(){
-    const actionsArray = Object.keys(actions)
-    renderCircles(actionsArray, "action")
+    //const actionsArray = Object.keys(actions)
+    renderCircles(actions, "action")
   }
 
   function renderTransactions(){
