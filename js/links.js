@@ -4,7 +4,7 @@ let actions = {}
 window.onload = function (){setup()}
 
 function setup(){
-  setupSVGCancas()
+  setupSVGCanvas()
   displayRecords()
 }
 
