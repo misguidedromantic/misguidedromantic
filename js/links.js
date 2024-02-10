@@ -51,7 +51,7 @@ function displayRecords(){
 
   setupSVGCanvas()
   setupActions()
-  renderActionCircles()
+  //renderActionCircles()
 
 }
 
