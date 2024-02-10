@@ -33,9 +33,6 @@ function displayRecords(){
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
       let theseTransactions = actions[key].transactions
-
-      console.log(theseTransactions)
-      
       renderCircles(theseTransactions, key + "transaction", "red", 200)
     }
 
@@ -58,6 +55,8 @@ class action {
 }
 
 function renderCircles(data, classString, colour, offset){
+
+  console.log(data)
 
   let g = svg.selectAll("g." + classString)
       .data(data)
