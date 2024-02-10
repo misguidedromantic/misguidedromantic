@@ -49,9 +49,15 @@ class action {
   
   constructor(title, transactions){
     this.title = title
+    this.shape = "circle"
+    this.colour = "purple"
+    this.x1 = 25
+    this.y1 = 25
+    this.xGap = 0
+    this.yGap = 0
     this.transactions = transactions
   }
-  
+
 }
 
 function renderCircles(data, classString, colour, offset){
