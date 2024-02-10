@@ -1,5 +1,5 @@
 let svg = {}
-let actions = {}
+let actions = []
 
 window.onload = function (){setup()}
 
@@ -19,8 +19,8 @@ function setupSVGCanvas(){
 function displayRecords(){
 
   function setupActions (){
-    actions.a = new action ("A")
-    actions.b = new action ("B")
+    actions.push(new action ("A"))
+    actions.push(new action ("B"))
   }
 
   function renderActions(){
@@ -30,12 +30,12 @@ function displayRecords(){
 
   function renderTransactions(){
 
-    const actionsArray = Object.keys(actions)
+    //const actionsArray = Object.keys(actions)
 
-    for (let i = 0; i < actionsArray.length; i++) {
-      let key = actionsArray[i]
-      let thisAction = actions[key]
-      let classString = key + "transaction"
+    for (let i = 0; i < actions.length; i++) {
+      //let key = actionsArray[i]
+      let thisAction = actions[i]
+      let classString = thisAction.title + "transaction"
       renderCircles(thisAction.transactions, classString)
     }
 
