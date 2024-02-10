@@ -4,26 +4,30 @@ let actions = {}
 window.onload = function (){setup()}
 
 function setup(){
+  setupSVGCancas()
   displayRecords()
 }
 
-function displayRecords(){
-
-  function setupSVGCanvas(){
+function setupSVGCanvas(){
     svg = d3.select("#canvas")
       .append("svg")
       .attr("height", 500)
       .attr("width",500)
   }
 
+
+function displayRecords(){
+
   function setupActions (){
     actions.a = new action ("A", ["change","addon1"])
     actions.b = new action ("B", ["change"])
+
+    
   }
 
   function renderActions(){
     const actionsArray = Object.keys(actions)
-    renderCircles(actionsArray, "action", "blue", 0)
+    renderCircles(actionsArray, "action")
   }
 
   function renderTransactions(){
@@ -47,20 +51,42 @@ function displayRecords(){
 
 class action {
   
-  constructor(title, transactions){
+  constructor(title){
     this.title = title
+    this.transactions = {}
     this.shape = "circle"
+    this.r = 5
     this.colour = "purple"
     this.x1 = 25
     this.y1 = 25
     this.xGap = 0
-    this.yGap = 0
-    this.transactions = transactions
+    this.yGap = 25
+    
+  }
+
+  addTransaction(){
+
+    
   }
 
 }
 
-function renderCircles(data, classString, colour, offset){
+class transaction {
+
+  constructor(title){
+    this.title = title
+    this.shape = "circle"
+    this.colour = "red"
+    this.r = 5
+    this.x1 = 225
+    this.y1 = 25
+    this.xGap = 25
+    this.yGap = 0
+  }
+  
+}
+
+function renderCircles(data, classString){
 
   console.log(data)
 
