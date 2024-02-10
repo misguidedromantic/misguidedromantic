@@ -32,9 +32,11 @@ function displayRecords(){
 
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
-      let thisAction = actions[key]
+      let theseTransactions = [actions[key].transactions]
+
+      console.log(theseTransactions)
       
-      renderCircles([thisAction.transactions], key + "transaction", "red", 200)
+      renderCircles(theseTransactions, key + "transaction", "red", 200)
     }
 
   }
