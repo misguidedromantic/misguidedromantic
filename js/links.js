@@ -19,10 +19,8 @@ function setupSVGCanvas(){
 function displayRecords(){
 
   function setupActions (){
-    actions.a = new action ("A", ["change","addon1"])
-    actions.b = new action ("B", ["change"])
-
-    
+    actions.a = new action ("A")
+    actions.b = new action ("B")
   }
 
   function renderActions(){
@@ -36,8 +34,9 @@ function displayRecords(){
 
     for (let i = 0; i < actionsArray.length; i++) {
       let key = actionsArray[i]
+      let thisAction = actions[key]
       let theseTransactions = actions[key].transactions
-      renderCircles(theseTransactions, key + "transaction", "red", 200)
+      renderCircles(actions[key].transactions, "transaction")
     }
 
   }
@@ -53,7 +52,7 @@ class action {
   
   constructor(title){
     this.title = title
-    this.transactions = {}
+    this.transactions = []
     this.shape = "circle"
     this.r = 5
     this.colour = "purple"
@@ -61,14 +60,22 @@ class action {
     this.y1 = 25
     this.xGap = 0
     this.yGap = 25
-    
   }
 
-  addTransaction(){
+  setTransactions(){
 
-    
-  }
+    let transactions = []
 
+    switch(this.title){
+      case "A":
+        transactions[0] = new transaction("A1")
+
+      case "B":
+        transactions[0] = new transaction("B1")
+        transactions[1] = new transaction("B2")
+    }
+
+    this.transactions = transactions
 }
 
 class transaction {
@@ -83,7 +90,7 @@ class transaction {
     this.xGap = 25
     this.yGap = 0
   }
-  
+
 }
 
 function renderCircles(data, classString){
