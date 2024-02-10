@@ -31,7 +31,7 @@ function displayRecords(){
   function renderTransactions(){
 
     for (let thisAction in actions){
-      console.log(thisAction)
+      console.log(thisAction.transactions)
     }
     
   }
