@@ -58,9 +58,10 @@ class action {
     this.y1 = 25
     this.xGap = 0
     this.yGap = 25
+    this.setTransactions()
   }
 
-  setTransactions(){
+   setTransactions(){
 
     let transactions = []
 
