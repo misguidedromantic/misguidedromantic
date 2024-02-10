@@ -103,8 +103,8 @@ function renderCircles(data, classString){
       .attr("class", classString)
    
     g.append("circle")
-      .attr("cx", (d, i) => i * d.xGap + d.x1)
-      .attr("cy", (d, i) => i * d.yGap + d.y1)
+      .attr("cx", (d, i) => parseInt(i * d.xGap + d.x1))
+      .attr("cy", (d, i) => parseInt(i * d.yGap + d.y1))
       .attr("r", d => d.r)
       .attr("fill", d => d.colour)
       .attr("opacity", 1) 
