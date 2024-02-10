@@ -19,6 +19,8 @@ function displayRecords(){
   function setupActions (){
     actions.a = new action ("A", ["change","addon1"])
     actions.b = new action ("B", ["change"])
+
+    console.log(actions)
   }
 
   function renderActionCircles(){
