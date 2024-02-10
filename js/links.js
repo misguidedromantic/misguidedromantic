@@ -22,7 +22,8 @@ function displayRecords(){
   }
 
   function renderActions(){
-    renderCircles(actions, "action", "purple")
+    const actionsArray = Object.keys(actions)
+    renderCircles(actionsArray, "action", "blue", 0)
   }
 
   function renderTransactions(){
@@ -40,8 +41,9 @@ function displayRecords(){
 
   setupSVGCanvas()
   setupActions()
-  renderCircles(actions, "action", "blue", 0)
-  renderTransactions()
+  renderActions()
+
+  //renderTransactions()
   
 }
 
