@@ -108,8 +108,8 @@ class transaction {
     this.r = 5
     this.x1 = 225
     this.y1 = 25
-    this.xGap = 25
-    this.yGap = 0
+    this.xGap = 0
+    this.yGap = 15
   }
 
 }
