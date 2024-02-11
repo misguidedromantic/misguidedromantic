@@ -37,11 +37,17 @@ function getAlphabeticArray(length){
   return arr
 }
 
+function getRandomNumber(min, max){
+  return Math.random() * (max - min) + min
+}
+
 function setupData(){
   
   let arr = getAlphabeticArray(20)
   arr.forEach((elem) => {
-    actions.push(new action(elem))
+    const thisAction = new action (elem)
+    thisAction.setTransactions(getRandomNumber(1,12))
+    actions.push(thisAction)
   })
   console.log(actions)
 }
@@ -83,24 +89,16 @@ class action {
     this.y1 = 25
     this.xGap = 0
     this.yGap = 15
-    this.setTransactions()
   }
 
-   setTransactions(){
-
+  setTransactions(count){
+    
     let transactions = []
 
-    switch(this.title){
-
-      case "B":
-        transactions[0] = new transaction("B1")
-        transactions[1] = new transaction("B2")
-        break;
-
-      default:
-        transactions[0] = new transaction(this.title + "1")
-
-    }
+     for (let i = 0; i < count; i++){
+       transactions[i] = new transaction(this.title + i)  
+     }
+     
     this.transactions = transactions
   }
 }
