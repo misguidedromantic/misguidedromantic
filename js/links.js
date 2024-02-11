@@ -5,7 +5,7 @@ window.onload = function (){setup()}
 
 function setup(){
   setupSVGCanvas()
-  displayRecords()
+  setupData()
 }
 
 function setupSVGCanvas(){
@@ -15,13 +15,41 @@ function setupSVGCanvas(){
       .attr("width",500)
   }
 
+function getAlphabeticArray(length){
+  //error if null/NaN etc.?
+
+  switch (length){
+    
+    case (length > 26):
+      length = 26
+      break;
+
+    case (length < 1):
+      length = 1 
+  }
+
+  let arr = []
+
+  for (let i = 0; i < length; i++){
+    arr[i] = (i + 10).toString(36)    
+  }
+
+  return arr
+}
+
+function setupData(){
+  
+  let arr = getAlphabeticArray(20)
+  arr.forEach((elem) => {
+    actions.push(new action(elem))
+  })
+  console.log(actions)
+}
+
 
 function displayRecords(){
 
-  function setupActions (){
-    actions.push(new action ("A"))
-    actions.push(new action ("B"))
-  }
+  
 
   function renderActions(){
     renderCircles(actions, "action")
