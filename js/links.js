@@ -6,6 +6,7 @@ window.onload = function (){setup()}
 function setup(){
   setupSVGCanvas()
   setupData()
+  displayRecords()
 }
 
 function setupSVGCanvas(){
@@ -49,13 +50,9 @@ function setupData(){
     thisAction.setTransactions(getRandomNumber(1,12))
     actions.push(thisAction)
   })
-  console.log(actions)
 }
 
-
 function displayRecords(){
-
-  
 
   function renderActions(){
     renderCircles(actions, "action")
@@ -71,7 +68,6 @@ function displayRecords(){
 
   }
 
-  setupActions()
   renderActions()
   renderTransactions()
   
