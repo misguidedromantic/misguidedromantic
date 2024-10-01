@@ -1,14 +1,16 @@
 function testSongs(){
 
-    let songTitle = "testSong"
-    
-    let testSong = new song (songTitle)
+    const songTitle = "testSong"
 
-    testSong.setLength(getRandomInt(0,10),getRandomInt(0,60))
+    const testSong = new song ("testSong")
 
-    let titleResult = (songTitle === testSong.title)
+    assert.equal(1,2, "don't match")
 
-    return titleResult
+    //testSong.setLength(getRandomInt(0,10),getRandomInt(0,60))
+
+    //let titleResult = (songTitle === testSong.title)
+
+    //return titleResult
 
 }
 
