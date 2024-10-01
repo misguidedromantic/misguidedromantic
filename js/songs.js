@@ -6,7 +6,6 @@ class album {
 
 }
 
-
 class song {
   
   constructor(title){
