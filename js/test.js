@@ -5,12 +5,16 @@ function runTests(){
 
     function testClassType (){ 
 
+        let result = "failed"
+
         console.log(testClassType.name)
         console.log(testSong instanceof song)
         
         //let result = "failed"
 
-        if(testSong instanceof song){console.log("passed")}
+        if(testSong instanceof song){result = "passed"}
+
+        console.log(testClassType.name & ": " & result)
         //return testClassType.name & ": " & result
     }
     
