@@ -4,19 +4,18 @@ async function runTests(){
 
     function testClassType (){return testSong instanceof song}
     function testTitle (){return testSong.title === "testSong"}
-    
     function testLengthMethod (){
         testSong.setLength(1, 23)
         return testSong.lengthInSeconds === 83
     }
 
-    await console.log(getTestResult(testClassType))
-    await console.log(getTestResult(testTitle))
-    await console.log(getTestResult(testLengthMethod))
+    console.log(getTestResult(testClassType))
+    console.log(getTestResult(testTitle))
+    console.log(getTestResult(testLengthMethod))
 
 }
 
-async function getTestResult(func){
+function getTestResult(func){
     
     let result = "fail"
 
