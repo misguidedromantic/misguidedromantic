@@ -2,10 +2,10 @@ function runTests(){
     
     const testSong = new song ("testSong")
 
-    function testClassType (){
+    function testClassType (){ 
         let result = "failed"
         if(testSong instanceof song){result = "passed"}
-        return this.name & ": " & result
+        return testClassType.name & ": " & result
     }
     
     function testTitle (){
@@ -20,9 +20,8 @@ function runTests(){
         if (testSong.lengthInSeconds === 83){result = "passed"}
         return this.name & ": " & result
     }
-
-    let classResult = testClassType()
-    console.log(classResult)
+    
+    console.log(testClassType())
 
     //console.log(testClassType())
     //console.log(testTitle())
