@@ -4,7 +4,7 @@ let svg ={}
 window.onload = function (){setup()}
 
 function setup(){
-  testSongs()
+  consolelog(testSongs())
 
   //setupSongs()
   //setupDisplay()

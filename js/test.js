@@ -4,12 +4,11 @@ function testSongs(){
     
     let testSong = new song (songTitle)
 
-
     testSong.setLength(getRandomInt(0,10),getRandomInt(0,60))
 
     let titleResult = (testSong = testSong.title)
 
-    console.log(titleResult)
+    return titleResult
 
 }
 
