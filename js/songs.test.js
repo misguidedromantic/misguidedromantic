@@ -1,9 +1,5 @@
 async function runTests(){
 
-    //hemmingway bridge
-    //Try creating 'test cases' indepedendtly then running them against a test
-
-    console.log ("test14")
     const testSong = new song ("testSong")
 
     function testClassType (){return testSong instanceof song}
@@ -17,7 +13,7 @@ async function runTests(){
     await console.log(getTestResult(testClassType))
     await console.log(getTestResult(testTitle))
     await console.log(getTestResult(testLengthMethod))
-    
+
 }
 
 async function getTestResult(func){
