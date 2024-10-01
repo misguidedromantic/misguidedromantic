@@ -40,7 +40,6 @@ function displaySong(song){
     let beatsPerSecond = song.bars.length / song.lengthInSeconds
     let secondsPerBar = d.timeSignatureNumerator / beatsPerSecond
     let widthInPixels = secondsPerBar
-    console.log(widthInPixels)
     return widthInPixels
   }
  
