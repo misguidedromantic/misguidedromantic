@@ -1,20 +1,11 @@
 function runTests(){
-    console.log ("test7")
+    console.log ("test8")
     
     const testSong = new song ("testSong")
 
     function testClassType (){ 
-
         let result = "failed"
-
-        console.log(testClassType.name)
-        console.log(testSong instanceof song)
-        
-        
-
         if(testSong instanceof song){result = "passed"}
-
-        //console.log(testClassType.name + ": " + result)
         return testClassType.name + ": " + result
     }
     
@@ -32,9 +23,9 @@ function runTests(){
     }
     
 
-    testClassType()
+    //testClassType()
 
-    //console.log(testClassType())
+    console.log(testClassType())
     //console.log(testTitle())
     //console.log(testLengthMethod())
 
