@@ -1,22 +1,23 @@
-function testSongs(){
-
-    const songTitle = "testSong"
+function runTests(){
+    
+    let results = []
 
     const testSong = new song ("testSong")
 
-    assert.equal(1,2, "don't match")
+    function testClassType (){return testSong instanceof song}
+    
+    function testTitle (){return testSong.title = "testSong"}
+    
+    function testLengthMethod (){
+        testSong.setLength(1,23)
+        return (testSong.lengthInSeconds === 83) 
+    }
 
-    //testSong.setLength(getRandomInt(0,10),getRandomInt(0,60))
+    results.push(testClassType())
+    results.push(testTitle())
+    results.push(testLengthMethod())
 
-    //let titleResult = (songTitle === testSong.title)
+    console.log(results)
 
-    //return titleResult
-
-}
-
-function getRandomInt(min, max) {
-    const minCeiled = Math.ceil(min);
-    const maxFloored = Math.floor(max);
-    return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled); // The maximum is exclusive and the minimum is inclusive
 }
 
