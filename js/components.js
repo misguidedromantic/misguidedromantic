@@ -5,7 +5,7 @@ window.onload = function (){setup()}
 
 function setup(){
   
-  console.log ("test5")
+  console.log ("test6")
   runTests()
 
   //setupSongs()
