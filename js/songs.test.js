@@ -12,7 +12,7 @@ function runTests(){
     console.log(getTestResult(testClassType))
     console.log(getTestResult(testTitle))
     console.log(getTestResult(testLengthMethod))
-
+    console.log("tests complete")
 }
 
 function getTestResult(func){

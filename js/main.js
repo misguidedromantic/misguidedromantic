@@ -4,15 +4,32 @@ let svg ={}
 window.onload = function (){setup()}
 
 function setup(){
+  
   console.log("page loaded")
   runTests()
-  console.log("tests complete")
+  
+  
   setupSongs()
   //setupDisplay()
 }
 
+//eventually a data source?
+function getSongTitles (){
+  return [
+    "good after bad",
+    "inside out"
+  ]
+
+}
+
 function setupSongs (){
-  songs.goodAfterBad = setupGoodAfterBad()
+
+  let songTitles = getSongTitles()
+
+  songTitles.forEach(songTitle => {
+    songs[songTitle] = new song(songTitle)
+  });
+  
 }
 
 function setupGoodAfterBad (){
