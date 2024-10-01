@@ -1,4 +1,4 @@
-async function runTests(){
+function runTests(){
 
     const testSong = new song ("testSong")
 
