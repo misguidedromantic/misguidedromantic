@@ -4,6 +4,10 @@ let svg ={}
 window.onload = function (){setup()}
 
 function setup(){
+  
+  console.log ("page loaded")
+  
+  
   console.log(testSongs())
 
   //setupSongs()
