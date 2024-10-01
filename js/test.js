@@ -21,9 +21,12 @@ function runTests(){
         return this.name & ": " & result
     }
 
-    console.log(testClassType())
-    console.log(testTitle())
-    console.log(testLengthMethod())
+    let classResult = testClassType()
+    console.log(classResult)
+
+    //console.log(testClassType())
+    //console.log(testTitle())
+    //console.log(testLengthMethod())
 
 }
 
