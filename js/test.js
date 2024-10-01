@@ -3,9 +3,14 @@ function runTests(){
     const testSong = new song ("testSong")
 
     function testClassType (){ 
-        let result = "failed"
-        if(testSong instanceof song){result = "passed"}
-        return testClassType.name & ": " & result
+
+        console.log(testClassType.name)
+        console.log(testSong instanceof song)
+        
+        //let result = "failed"
+
+        if(testSong instanceof song){console.log("passed")}
+        //return testClassType.name & ": " & result
     }
     
     function testTitle (){
@@ -21,7 +26,8 @@ function runTests(){
         return this.name & ": " & result
     }
     
-    console.log(testClassType())
+
+    testClassType()
 
     //console.log(testClassType())
     //console.log(testTitle())
