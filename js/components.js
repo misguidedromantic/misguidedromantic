@@ -5,9 +5,9 @@ window.onload = function (){setup()}
 
 function setup(){
   
-  console.log ("test3")
+  console.log ("test4")
   runTests()
-  
+
   //setupSongs()
   //setupDisplay()
 }

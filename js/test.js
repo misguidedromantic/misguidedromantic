@@ -8,6 +8,8 @@ function runTests(){
     
     function testLengthMethod (){
         testSong.setLength(1,23)
+
+
         return (testSong.lengthInSeconds === 83) 
     }
 

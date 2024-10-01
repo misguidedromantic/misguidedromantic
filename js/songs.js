@@ -23,6 +23,9 @@ class song {
   }
   
   setLength(min,sec){
+
+    console.log(min/60 + sec)
+
     this.lengthInSeconds = min/60 + sec
   }
 }
