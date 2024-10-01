@@ -6,7 +6,7 @@ function testSongs(){
 
     testSong.setLength(getRandomInt(0,10),getRandomInt(0,60))
 
-    let titleResult = (testSong = testSong.title)
+    let titleResult = (testSong == testSong.title)
 
     return titleResult
 
