@@ -1,5 +1,8 @@
 function runTests(){
 
+    //hemmingway bridge
+    //Try creating 'test cases' indepedendtly then running them against a test
+
     console.log ("test14")
     const testSong = new song ("testSong")
 
