@@ -1,4 +1,5 @@
 function runTests(){
+    console.log ("test7")
     
     const testSong = new song ("testSong")
 
