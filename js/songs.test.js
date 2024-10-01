@@ -1,4 +1,4 @@
-function runTests(){
+async function runTests(){
 
     //hemmingway bridge
     //Try creating 'test cases' indepedendtly then running them against a test
@@ -14,12 +14,13 @@ function runTests(){
         return testSong.lengthInSeconds === 83
     }
 
-    console.log(getTestResult(testClassType))
-    console.log(getTestResult(testTitle))
-    console.log(getTestResult(testLengthMethod))
+    await console.log(getTestResult(testClassType))
+    await console.log(getTestResult(testTitle))
+    await console.log(getTestResult(testLengthMethod))
+    
 }
 
-function getTestResult(func){
+async function getTestResult(func){
     
     let result = "fail"
 

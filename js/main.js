@@ -5,13 +5,12 @@ window.onload = function (){setup()}
 
 function setup(){
   runTests()
-  //setupSongs()
+  await setupSongs()
   //setupDisplay()
 }
 
 function setupSongs (){
   songs.goodAfterBad = setupGoodAfterBad()
-  console.log(songs)
 }
 
 function setupGoodAfterBad (){
