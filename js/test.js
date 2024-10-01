@@ -1,39 +1,19 @@
 function runTests(){
 
-    let results = []
-
-    console.log ("test12")
+    console.log ("test14")
     const testSong = new song ("testSong")
-    
-    console.log(getTestResult(testClassType))
-    
 
-
-    function testClassType (){ 
-        //let result = "fail"
-        //if(testSong instanceof song){result = "pass"}
-        //return testClassType.name + ": " + result
-
-        return testSong instanceof song
-    }
-    
-    function testTitle (){
-        let result = "fail"
-        if (testSong.title === "testSong"){result = "pass"}
-        return testTitle.name + ": " + result
-    }
+    function testClassType (){return testSong instanceof song}
+    function testTitle (){return testSong.title === "testSong"}
     
     function testLengthMethod (){
         testSong.setLength(1, 23)
-        let result = "fail"
-        if (testSong.lengthInSeconds === 83){result = "pass"}
-        return testLengthMethod.name + ": " + result
+        return testSong.lengthInSeconds === 83
     }
 
-    console.log(testClassType())
-    console.log(testTitle())
-    console.log(testLengthMethod())
-
+    console.log(getTestResult(testClassType))
+    console.log(getTestResult(testTitle))
+    console.log(getTestResult(testLengthMethod))
 }
 
 function getTestResult(func){
