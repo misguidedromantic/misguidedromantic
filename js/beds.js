@@ -1,21 +1,19 @@
 class bed {
 
-    constructor(bedID){
-        this.id = bedID
+    constructor(bedName){
+        this.name = bedName
         this.x = 50
         this.y = 50
         this.width = 50
         this.height = 50
     }
 
-    setDimensions(width, height){
-        this.width = width
-        this.height = height
-    }
-
-    setPosition(x, y){
-        this.x = x
-        this.y = y
-    }
-
 }
+
+function getBedData(){
+    return [
+        {bedName: "bed1", bedPosX: 25, bedPosY: 25, bedHeight: 50, bedWidth: 50},
+        {bedName: "bed2", bedPosX: 250, bedPosY: 250, bedHeight: 30, bedWidth: 80}
+    ]
+}
+

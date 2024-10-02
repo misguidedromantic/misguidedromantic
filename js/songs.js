@@ -1,11 +1,3 @@
-class album {
-  
-  constructor(songTitle){
-    this.title = songTitle
-  }
-
-}
-
 class song {
   
   constructor(title){
@@ -26,6 +18,21 @@ class song {
     this.lengthInSeconds = (min * 60) + sec
   }
 }
+
+function getSongData(){
+  return [
+    new song("good after bad"),
+    new song("it's not love"),
+    new song("toiling avoiding")
+  ]
+}
+
+//function setupGoodAfterBad (){
+  //let thisSong = new song ("Good After Bad")
+  //thisSong.setLength(5,2)
+  //thisSong.addBarSet(155, "44")
+  //return thisSong
+//}  
 
 class bar {
   

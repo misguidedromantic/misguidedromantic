@@ -1,4 +1,5 @@
-//let songs = {}
+let beds = []
+let songs = {}
 
 window.onload = function (){setup()}
 
@@ -21,13 +22,18 @@ function setup(){
 
     function setupBeds(){
       
-      let beds = []
+      let bedData = getBedData()
 
-      beds[0] = new bed("bed1")
-      beds[1] = new bed("bed2")
-
-      beds[1].setDimensions(80, 30)
-      beds[1].setPosition(250,250)
+      for (let i = 0; i < bedData.length; i++) { 
+        let d = bedData[i]
+        thisBed = new bed (d.bedName)
+        thisBed.x = d.bedPosX
+        thisBed.y = d.bedPosY
+        thisBed.width = d.bedWidth
+        thisBed.height = d.bedHeight
+        
+        beds[thisBed.name] = thisBed
+      } 
 
       svg.selectAll("rect")
         .data(beds)
@@ -45,38 +51,8 @@ function setup(){
 
     //displaySong(songs.goodAfterBad)
   }
-
   setupDisplay()
 }
-
-//eventually a data source?
-function getSongTitles (){
-  return [
-    "good after bad",
-    "inside out"
-  ]
-
-}
-
-function setupSongs (){
-
-  let songTitles = getSongTitles()
-
-  songTitles.forEach(songTitle => {
-    songs[songTitle] = new song(songTitle)
-  });
-  
-}
-
-function setupGoodAfterBad (){
-  let thisSong = new song ("Good After Bad")
-  thisSong.setLength(5,2)
-  thisSong.addBarSet(155, "44")
-  return thisSong
-}  
-
-
-
 
 
 function displaySong(song){
