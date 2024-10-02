@@ -1,14 +1,15 @@
 class bed {
 
-    constructor(bedName){
-        this.name = bedName
-        this.x = 50
-        this.y = 50
-        this.width = 50
-        this.height = 50
+    constructor(bedDatum){
+        this.name = bedDatum.bedName
+        this.x = bedDatum.bedPosX
+        this.y = bedDatum.bedPosY
+        this.width = bedDatum.bedWidth
+        this.height = bedDatum.bedHeight
     }
 
 }
+
 
 function getBedData(){
     return [

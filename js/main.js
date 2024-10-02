@@ -21,29 +21,41 @@ function setup(){
     }
 
     function setupBeds(){
-      
-      let bedData = getBedData()
 
-      for (let i = 0; i < bedData.length; i++) { 
-        let d = bedData[i]
-        thisBed = new bed (d.bedName)
-        thisBed.x = d.bedPosX
-        thisBed.y = d.bedPosY
-        thisBed.width = d.bedWidth
-        thisBed.height = d.bedHeight
+      let bedsArray = []
+
+      function setupBedData(){
         
-        beds[thisBed.name] = thisBed
+        let bedData = getBedData()
+
+        for (let i = 0; i < bedData.length; i++) { 
+          thisBed = new bed (bedData[i])
+          beds[thisBed.name] = thisBed
+          bedsArray[i] = thisBed
+        }
+
+        console.log(beds)
+        console.log(bedsArray)
+      
       } 
 
-      svg.selectAll("rect")
-        .data(bedData)
-        .join("rect")
-        .attr("x", (d) => d.bedPosX)
-        .attr("y", (d) => d.bedPosY)
-        .attr("width", (d) => d.bedWidth)
-        .attr("height", (d) => d.bedHeight)
-        .attr("fill", "brown")
-        .attr("opacity", 1) 
+      function renderBeds(){
+        
+        svg.selectAll("rect.bed")
+          .data(bedsArray)
+          .attr("class","bed")
+          .attr("id", (d) => d.name)
+          .join("rect")
+          .attr("x", (d) => d.x)
+          .attr("y", (d) => d.y)
+          .attr("width", (d) => d.width)
+          .attr("height", (d) => d.height)
+          .attr("fill", "brown")
+          .attr("opacity", 1) 
+      }
+
+      setupBedData()
+      renderBeds()
     }
     
     setupSVGCanvas()
