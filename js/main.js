@@ -36,12 +36,12 @@ function setup(){
       } 
 
       svg.selectAll("rect")
-        .data(beds)
+        .data(bedData)
         .join("rect")
-        .attr("x", (d) => d.x)
-        .attr("y", (d) => d.y)
-        .attr("width", (d) => d.width)
-        .attr("height", (d) => d.height)
+        .attr("x", (d) => d.bedPosX)
+        .attr("y", (d) => d.bedPosY)
+        .attr("width", (d) => d.bedWidth)
+        .attr("height", (d) => d.bedHeight)
         .attr("fill", "brown")
         .attr("opacity", 1) 
     }
