@@ -21,13 +21,13 @@ function setup(){
 
     function setupBeds(){
       
-      let beds = {}
+      let beds = []
 
-      beds.bed1 = new bed("bed1")
-      beds.bed2 = new bed("bed2")
+      beds[0] = new bed("bed1")
+      beds[1] = new bed("bed2")
 
-      beds["bed2"].setDimensions(80, 30)
-      beds["bed2"].setPosition(250,250)
+      beds[1].setDimensions(80, 30)
+      beds[1].setPosition(250,250)
 
       svg.selectAll("rect")
         .data(beds)
