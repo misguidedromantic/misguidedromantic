@@ -1,4 +1,4 @@
-let beds = []
+let beds = {}
 let songs = {}
 
 window.onload = function (){setup()}
