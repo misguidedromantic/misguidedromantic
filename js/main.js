@@ -3,14 +3,8 @@ let songs = {}
 
 window.onload = function (){setup()}
 
-
-
 function setup(){
   
-  //console.log("page loaded")
-  //runTests()
-  //setupSongs()
-
   let svgHeading = {}
   let svgCanvas = {}
 
@@ -38,19 +32,20 @@ function setup(){
 
   }
 
-  
   function setupHeading(){
 
     function renderHeading(headingText){
+      
       svgHeading.append("text")
         .text(headingText)
         .attr("x", 25)
         .attr("y", 25)
+        .style("font-family","arial")
+        .style("font-size","18")
     }
 
     renderHeading("Misguided Romantic Garden")
   }
-
 
   function setupBeds(){
 
