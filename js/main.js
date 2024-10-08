@@ -23,8 +23,8 @@ function setup(){
         .attr("width",width)
     }
 
-    let svgHeading = createSVGCanvas("#heading", 50, 500)
-    let svgCanvas = createSVGCanvas("#canvas", 500, 500)
+    svgHeading = createSVGCanvas("#heading", 50, 500)
+    svgCanvas = createSVGCanvas("#canvas", 500, 500)
 
   }
 
