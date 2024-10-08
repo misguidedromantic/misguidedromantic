@@ -3,69 +3,88 @@ let songs = {}
 
 window.onload = function (){setup()}
 
+
+
 function setup(){
   
   //console.log("page loaded")
   //runTests()
   //setupSongs()
 
-  function setupDisplay(){
-    
-    let svg ={}
+  let svgHeading = {}
+  let svgCanvas = {}
 
-    function setupSVGCanvas(){
-      svg = d3.select("#canvas")
+  function setupSVG(){
+
+    function createSVGCanvas(divID, height, width){
+      return d3.select(divID)
         .append("svg")
-        .attr("height", 500)
-        .attr("width",500)
+        .attr("height", height)
+        .attr("width",width)
     }
 
-    function setupBeds(){
+    let svgHeading = createSVGCanvas("#heading", 50, 500)
+    let svgCanvas = createSVGCanvas("#canvas", 500, 500)
 
-      let bedsArray = []
+  }
 
-      function setupBedData(){
-        
-        let bedData = getBedData()
+  
+  function setupHeading(){
 
-        for (let i = 0; i < bedData.length; i++) { 
-          thisBed = new bed (bedData[i])
-          beds[thisBed.name] = thisBed
-          bedsArray[i] = thisBed
-        }
+    function renderHeading(headingText){
+      svgHeading.append("text")
+        .text(headingText)
+    }
 
-        console.log(beds)
-        console.log(bedsArray)
+    renderHeading("Misguided Romantic Garden")
+  }
+
+
+  function setupBeds(){
+
+    let bedsArray = []
+
+    function setupBedData(){
       
-      } 
+      let bedData = getBedData()
 
-      function renderBeds(){
-        
-        svg.selectAll("rect.bed")
-          .data(bedsArray)
-          .attr("class","bed")
-          .attr("id", (d) => d.name)
-          .join("rect")
-          .attr("x", (d) => d.x)
-          .attr("y", (d) => d.y)
-          .attr("width", (d) => d.width)
-          .attr("height", (d) => d.height)
-          .attr("fill", "brown")
-          .attr("opacity", 1) 
+      for (let i = 0; i < bedData.length; i++) { 
+        thisBed = new bed (bedData[i])
+        beds[thisBed.name] = thisBed
+        bedsArray[i] = thisBed
       }
 
-      setupBedData()
-      renderBeds()
-    }
+      console.log(beds)
+      console.log(bedsArray)
     
-    setupSVGCanvas()
-    setupBeds()
+    } 
+
+    function renderBeds(){
+      
+      svgCanvas.selectAll("rect.bed")
+        .data(bedsArray)
+        .attr("class","bed")
+        .attr("id", (d) => d.name)
+        .join("rect")
+        .attr("x", (d) => d.x)
+        .attr("y", (d) => d.y)
+        .attr("width", (d) => d.width)
+        .attr("height", (d) => d.height)
+        .attr("fill", "brown")
+        .attr("opacity", 1) 
+    }
+
+    setupBedData()
+    renderBeds()
+  }
+
+  setupSVG()
+  setupHeading()
+  setupBeds()
 
     //displaySong(songs.goodAfterBad)
-  }
-  setupDisplay()
 }
-
+  
 
 function displaySong(song){
 
