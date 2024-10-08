@@ -34,6 +34,10 @@ function setup(){
 
   function setupHeading(){
 
+    function renderWord(word){
+      
+    }
+
     function renderHeading(headingText){
       
       svgHeading.append("text")
