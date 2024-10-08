@@ -40,8 +40,8 @@ function setup(){
         .text(headingText)
         .attr("x", 25)
         .attr("y", 25)
-        .style("font-family","arial")
-        .style("font-size","18")
+        .style("font-family", "tahoma")
+        .style("font-size", "22px")
     }
 
     renderHeading("Misguided Romantic Garden")
