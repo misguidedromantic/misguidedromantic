@@ -14,7 +14,16 @@ function setup(){
   let svgHeading = {}
   let svgCanvas = {}
 
+  
+
   function setupSVG(){
+
+    function positionDiv(divID, left, top){
+      d3.select(divID)
+        .style("position", "absolute")
+        .style("left", left)
+        .style("top", top)
+    }
 
     function createSVGCanvas(divID, height, width){
       return d3.select(divID)
@@ -22,6 +31,9 @@ function setup(){
         .attr("height", height)
         .attr("width",width)
     }
+
+    positionDiv("#heading", "50px", "50px")
+    positionDiv("#canvas", "50px", "100px")
 
     svgHeading = createSVGCanvas("#heading", 50, 500)
     svgCanvas = createSVGCanvas("#canvas", 500, 500)
