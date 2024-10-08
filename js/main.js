@@ -14,8 +14,6 @@ function setup(){
   let svgHeading = {}
   let svgCanvas = {}
 
-  
-
   function setupSVG(){
 
     function positionDiv(divID, left, top){
@@ -46,6 +44,8 @@ function setup(){
     function renderHeading(headingText){
       svgHeading.append("text")
         .text(headingText)
+        .attr("x", 25)
+        .attr("y", 25)
     }
 
     renderHeading("Misguided Romantic Garden")
