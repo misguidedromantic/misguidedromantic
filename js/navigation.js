@@ -13,7 +13,13 @@ function setup(){
 
     let persona = new phrase ("persona", "misguided romantic")
 
-    persona.render(svgNavigation)
+    let g = svgNavigation.select("#persona")
+
+    console.log(g.empty())
+
+    
+
+    //persona.render(svgNavigation)
 
 }
 
