@@ -33,7 +33,7 @@ function setup(){
     //const domains = getDomainData()
     const svg = getSVG()
 
-    function getTranslate(){
+    function getTranslate(d, i){
         let x = 0
         let y = i * 30 + 20
         return 'translate(' + x + ',' + y + ')'
@@ -42,6 +42,7 @@ function setup(){
     let gPersona = svg.selectAll('g.persona')
         .data(personas)
         .join('g')
+        .attr("id", d => d.title)
         .attr('transform', getTranslate)
     
     gPersona.append('text')
