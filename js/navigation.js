@@ -1,6 +1,6 @@
 window.onload = function (){setup()}
 
-function setup(){
+async function setup(){
 
     console.log("setup started")
 
@@ -17,8 +17,7 @@ function setup(){
 
     let domain = new phrase ("domain", "garden", svgNavigation)
     domain.render()
-    let x = persona.getWidth + 20 + 5
-    domain.setPosition(x, 20)
+    domain.setPosition(persona.getWidth() + 20 + 5, 20)
 }
 
 
@@ -58,7 +57,7 @@ class phrase {
 
     getWidth(){
         let g = this.getGSelection()
-        return g.select("text").node().getBBox().width
+        return g.select("text").node().getBBox().width;
     }
 
     setPosition(x, y){
