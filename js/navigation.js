@@ -1,15 +1,47 @@
+
+
 window.onload = function (){setup()}
 
-async function setup(){
+function setup(){
 
-    console.log('setup started')
+    function getPersonaData(){
+        return [
+            "aimless analyst",
+            "misguided romantic",
+            "james parry",
+            "dynastic observer"
+        ]
+    }
 
-    let divNavigation = d3.select('#navigation');
+    function getDomainData(){
+        return [
+            "garden",
+            "songs",
+            "journeys"
+        ]
+    }
+    
+    function getSVG(){
+        return d3.select('#navigation')
+            .append('svg')
+            .attr('height', '80px')
+            .attr('width', '800px');
+    }
 
-    let svgNavigation = divNavigation
-        .append('svg')
-        .attr('height', '80px')
-        .attr('width', '200px');
+    function renderCarousels(svg, data){
+
+
+
+
+
+    }
+
+    const personas = getPersonaData()
+    const domains = getDomainData()
+    const svg = getSVG()
+    
+
+
 
     let persona = new phrase ('persona', 'misguided romantic', svgNavigation)
     persona.render()
@@ -21,6 +53,7 @@ async function setup(){
     domain.setPosition(persona.getWidth() + 20 + 5, 20)
     domain.setColour("red")
 }
+
 
 
 
