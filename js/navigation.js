@@ -11,54 +11,62 @@ function setup(){
         .attr("height", "80px")
         .attr("width", "200px");
 
-    let persona = new phrase ("persona", "misguided romantic")
-    persona.render(svgNavigation)
+    let persona = new phrase ("persona", "misguided romantic", svgNavigation)
+    persona.render()
+    persona.setPosition(20, 20)
+
+    let domain = new phrase ("domain", "garden", svgNavigation)
+    domain.render()
+    domain.setPosition(persona.getWidth + 20 + 5, 20)
 }
 
 
 
 class phrase {
 
-    constructor(id, text){
+    constructor(id, text, svgContainer){
         this.id = id
         this.text = text
+        this.container = svgContainer
     }
 
-    render(svgContainer){
+    getGSelection(){
+        return d3.select("#" + this.id)
+    }
 
-        let g = svgContainer.select("#" + this.id)
-        console.log(g.empty())
+    render(){
+
+        let g = this.getGSelection()
 
         if (g.empty()) {
             
-            console.log("g no exist yet")
-            
-            let g = svgContainer.append("g")
+            let g = this.container.append("g")
                 .attr("id", this.id)
-                .attr("transform", "translate(20, 20)")
                 
             g.append("text")
                 .text(this.text);
 
 
         } else {
-            console.log("g exists already")
+            
+            console.log("no g selection")
+
         }
 
     }
 
-    getLength(){
+    getWidth(){
+        let g = this.getGSelection()
+        return g.select("text").node().getBBox().width
+    }
 
+    setPosition(x, y){
+        let g = this.getGSelection()
+        g.attr("transform", "translate(" + x + "," + y + ")")
     }
 
 
 }
-
-function getTextElementWidth(textElement){
-    d3.select('text').node().getBBox().width
-}
-
-
 
 function getScreenDimensions(){
 
