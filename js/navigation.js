@@ -13,13 +13,7 @@ function setup(){
 
     let persona = new phrase ("persona", "misguided romantic")
 
-    let g = svgNavigation.select("#persona")
-
     console.log(g.empty())
-
-    
-
-    //persona.render(svgNavigation)
 
 }
 
@@ -34,11 +28,12 @@ class phrase {
 
     render(svgContainer){
 
-        //let g = svgContainer.select("#" + this.id)
+        let g = svgContainer.select("#" + this.id)
+        console.log(g.empty())
 
-        //if (!g.empty()) {
+        if (g.empty()) {
             
-            //console.log("g no exist yet")
+            console.log("g no exist yet")
             
             let g = svgContainer.append("g")
                 .attr("id", this.id)
@@ -48,9 +43,9 @@ class phrase {
                 .text(this.text);
 
 
-        //} else {
+        } else {
             console.log("g exists already")
-        //}
+        }
 
     }
 
