@@ -1,6 +1,50 @@
 
+window.onload = function (){
 
-window.onload = function (){setup()}
+    function createMenu(){
+
+        const menuPosition = {x: "5px", y: "5px"}
+        const menuDimensions = {width: (window.innerWidth - 10) + "px", height: "80px"}
+
+        function createMenuDiv(){
+            return d3.select('body')
+                .append('div')
+                .attr('id','menu')
+                .style('position', 'absolute')
+                .style('left', menuPosition.x)
+                .style('top', menuPosition.y)
+                .style('width', menuDimensions.width)
+                .style('height', menuDimensions.height)
+        }
+
+        function createMenuSVG(){
+            return menuDiv.append('svg')
+                .attr('id', "menuCanvas")
+                .width('width', menuDimensions.width)
+                .height('height', menuDimensions.height)
+
+        }
+
+        const menuDiv = createMenuDiv()
+        const menuSVG = createMenuSVG()
+
+        function createCarosuelGroup(){
+            menuSVG.append('g.carosuel')
+        
+        }
+        
+    }
+    
+    
+    createMenu()
+
+}
+
+
+
+
+
+
 
 function setup(){
 
