@@ -12,9 +12,7 @@ function setup(){
         .attr("width", "200px");
 
     let persona = new phrase ("persona", "misguided romantic")
-
-    console.log(g.empty())
-
+    persona.render(svgNavigation)
 }
 
 
