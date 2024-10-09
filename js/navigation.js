@@ -2,17 +2,21 @@ window.onload = function (){setup()}
 
 function setup(){
 
-    let divNavigation = d3.select("#navigation")
+    const divNavigation = d3.select("#navigation")
+    const svgNavigation = divNavigation
+        .append("svg")
+        .attr("height", "80px")
+        .attr("width", "200px")
 
-    divNavigation.append("g")
+    svgNavigation.append("g")
         .attr("id", "persona")
         .attr("transform", "translate(20, 20)")
         .append("text")
-        .text("persona")
+        .text("persona e.g. mgr")
 
-    divNavigation.append("g")
+    svgNavigation.append("g")
         .attr("id", "domain")
-        .attr("transform", "translate(20, 20)")
+        .attr("transform", "translate(80, 20)")
         .append("text")
         .text("domain")
 
