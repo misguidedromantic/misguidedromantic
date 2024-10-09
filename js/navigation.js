@@ -45,7 +45,6 @@ function setup(){
         .attr('transform', getTranslate)
     
     gPersona.append('text')
-        .append('text')
         .text(d => d.title)
         .style('font-family', 'tahoma')
         .style('font-size', '14px')
