@@ -28,13 +28,13 @@ class phrase {
 
     render(svgContainer){
 
-        let g = svgContainer.select("#" + this.id)
+        //let g = svgContainer.select("#" + this.id)
 
-        if (!g.empty()) {
+        //if (!g.empty()) {
             
-            console.log("g no exist yet")
+            //console.log("g no exist yet")
             
-            g = svgContainer.append("g")
+            let g = svgContainer.append("g")
                 .attr("id", this.id)
                 .attr("transform", "translate(20, 20)")
                 
@@ -42,9 +42,9 @@ class phrase {
                 .text(this.text);
 
 
-        } else {
+        //} else {
             console.log("g exists already")
-        }
+        //}
 
     }
 
