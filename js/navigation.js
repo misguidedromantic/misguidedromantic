@@ -3,11 +3,14 @@ window.onload = function (){setup()}
 function setup(){
 
     let divNavigation = d3.select("#navigation");
-    
+    console.log(divNavigation)
+
     let svgNavigation = divNavigation
         .append("svg")
         .attr("height", "80px")
         .attr("width", "200px");
+
+    console.log(svgNavigation)
 
     svgNavigation.append("g")
         .attr("id", "persona")
