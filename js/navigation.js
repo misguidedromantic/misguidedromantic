@@ -2,6 +2,8 @@ window.onload = function (){setup()}
 
 function setup(){
 
+    console.log("setup started")
+
     let divNavigation = d3.select("#navigation");
     console.log(divNavigation)
 
