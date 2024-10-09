@@ -6,21 +6,22 @@ function setup(){
 
     function getPersonaData(){
         return [
-            "aimless analyst",
-            "misguided romantic",
-            "james parry",
-            "dynastic observer"
+            new persona ("aimless analyst"),
+            new persona ("misguided romantic"),
+            new persona ("james parry"),
+            new persona ("dynastic observer")
         ]
     }
 
     function getDomainData(){
         return [
-            "garden",
-            "songs",
-            "journeys"
+            new domain ("garden"),
+            new domain ("songs"),
+            new domain ("journeys")
         ]
     }
-    
+
+ 
     function getSVG(){
         return d3.select('#navigation')
             .append('svg')
@@ -28,90 +29,44 @@ function setup(){
             .attr('width', '800px');
     }
 
-    function renderCarousels(svg, data){
-
-
-
-
-
-    }
-
     const personas = getPersonaData()
-    const domains = getDomainData()
+    //const domains = getDomainData()
     const svg = getSVG()
+
+    function getTranslate(){
+        let x = 0
+        let y = i * 30 + 20
+        return 'translate(' + x + ',' + y + ')'
+    }
     
-
-
-
-    let persona = new phrase ('persona', 'misguided romantic', svgNavigation)
-    persona.render()
-    persona.setPosition(20, 20)
-    persona.setColour("yellow")
-
-    let domain = new phrase ('domain', 'garden', svgNavigation)
-    domain.render()
-    domain.setPosition(persona.getWidth() + 20 + 5, 20)
-    domain.setColour("red")
+    let gPersona = svg.selectAll('g.persona')
+        .data(personas)
+        .join('g')
+        .attr('transform', getTranslate)
+    
+    gPersona.append('text')
+        .append('text')
+        .text(d => d.title)
+        .style('font-family', 'tahoma')
+        .style('font-size', '14px')
+        .style('font-weight', 'bold');
 }
 
+class persona {
 
-
-
-class phrase {
-
-    constructor(id, text, svgContainer){
-        this.id = id
-        this.text = text
-        this.container = svgContainer
+    constructor(title){
+        this.title = title
+        this.selected = false
     }
 
-    getGSelection(){
-        return d3.select('#' + this.id)
+}
+
+class domain {
+
+    constructor(title){
+        this.title = title
+        this.selected = false
     }
-
-    getTextSelection(){
-        let g = this.getGSelection()
-        return g.select('text')
-    }
-
-    render(){
-        let g = this.getGSelection()
-
-        if (g.empty()) {
-            
-            let g = this.container.append('g')
-                .attr('id', this.id)
-                
-            g.append('text')
-                .text(this.text)
-                .style('font-family', 'tahoma')
-                .style('font-size', '14px')
-                .style('font-weight', 'bold');
-
-
-        } else {
-            
-            console.log('no g selection')
-
-        }
-
-    }
-
-    getWidth(){
-        let textElem = this.getTextSelection()
-        return textElem.node().getBBox().width;
-    }
-
-    setPosition(x, y){
-        let g = this.getGSelection()
-        g.attr('transform', 'translate(' + x + ',' + y + ')')
-    }
-
-    setColour(colour){
-        let textElem = this.getTextSelection()
-        textElem.attr('fill', colour)
-    }
-
 
 }
 
