@@ -17,7 +17,8 @@ function setup(){
 
     let domain = new phrase ("domain", "garden", svgNavigation)
     domain.render()
-    domain.setPosition(persona.getWidth + 20 + 5, 20)
+    let x = persona.getWidth + 20 + 5
+    domain.setPosition(x, 20)
 }
 
 
