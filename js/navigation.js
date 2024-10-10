@@ -81,25 +81,13 @@ window.onload = function (){
         let personaCarosuel = createPersonaCarosuel()
         let domainCarosuel = createDomainCarosuel()
 
-        //let widths = []        
+        let widths = []        
 
-        //personaCarosuel.selectAll('text').each(function(d, i) {
-            //widths.push(d3.select(this).node().getBBox().width)
-
-        //});
-
-        //console.log(widths)
-
-
-        let textElements = personaCarosuel.selectAll('text');
-
-        // Find the largest radius
-        let widestText = d3.max(textElements.nodes(), function(d) {
-            return parseFloat(d3.select(this).getBBox().width);
+        personaCarosuel.selectAll('text').each(function(d, i) {
+            widths.push(d3.select(this).node().getBBox().width)
         });
 
-        console.log("widest text:", widestText);
-
+       console.log(Math.max(widths))
     }
     
     createMenu()
