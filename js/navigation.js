@@ -20,8 +20,8 @@ window.onload = function (){
         function createMenuSVG(){
             return menuDiv.append('svg')
                 .attr('id', "menuCanvas")
-                .width('width', menuDimensions.width)
-                .height('height', menuDimensions.height)
+                .attr('width', menuDimensions.width)
+                .attr('height', menuDimensions.height)
 
         }
 
