@@ -20,6 +20,8 @@ class dial {
         
         const index = this.items.findIndex(item => item.selected === true);
 
+        console.log(index)
+
         if(index === -1){
             throw new error
         }
