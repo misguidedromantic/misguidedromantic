@@ -56,6 +56,14 @@ class dial {
             return getTranslateString(x, y)
         }
 
+        function calculateFontWeight(d){
+            if(d.selected){
+                return 'bold'
+            }else{
+                return 'lighter'
+            }
+        }
+
         function enterElements(selection){
             selection.attr("id", d => d.title)
                 .attr("transform", calculatePosition)
@@ -64,7 +72,13 @@ class dial {
                 .text(d => d.title)
                 .style('font-family', 'tahoma')
                 .style('font-size', '14px')
+                .style('font-weight', calculateFontWeight)
                 .attr('y', 14 / 2)
+        }
+
+        function updateElements(selection){
+            selection.attr("transform", calculatePosition)
+            selection.selectAll('text').style('font-weight', calculateFontWeight)
         }
         
         this.g.selectAll('g.' + this.id)

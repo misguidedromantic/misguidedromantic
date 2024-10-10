@@ -58,7 +58,7 @@ window.onload = function (){
             }
 
             domainData = getDomainData()
-            return createCarosuel(menuSVG, 'domain', domainData)
+            return new dial (menuSVG, 'domain', domainData)
         }
 
         let personaCarosuel = createPersonaCarosuel()
