@@ -38,6 +38,11 @@ window.onload = function (){
                 .data(data)
                 .join('g')
                 .attr("id", d => d.title)
+                .attr("transform", (d, i) => {
+                    let x = 0
+                    let y = 15 * i
+                    return getTranslateString(x, y)
+                })
             
             gSlots.append('text')
                 .text(d => d.title)
@@ -81,16 +86,23 @@ window.onload = function (){
         let personaCarosuel = createPersonaCarosuel()
         let domainCarosuel = createDomainCarosuel()
 
-        let widths = []        
+        function setDomainCarosuelPosition(){
+            let widths = []        
 
-        personaCarosuel.selectAll('text').each(function(d, i) {
-            const width = parseInt(Math.round(d3.select(this).node().getBBox().width))
-            widths.push(width)
-        });
+            personaCarosuel.selectAll('text').each(function(d, i) {
+                const width = parseInt(Math.round(d3.select(this).node().getBBox().width))
+                widths.push(width)
+            });
 
-        console.log(widths)
-        
-        console.log(d3.max(widths))
+            let x = d3.max(widths) + 3
+            let y = 0
+
+            domainCarosuel.attr('transform', getTranslateString(x, y))
+
+        }
+
+        setDomainCarosuelPosition()
+
     }
     
     createMenu()
