@@ -1,4 +1,7 @@
 
+let personaData = []
+let domainData = []
+
 window.onload = function (){
 
     function createMenu(){
@@ -28,33 +31,7 @@ window.onload = function (){
         const menuDiv = createMenuDiv()
         const menuSVG = createMenuSVG()
 
-        function createCarosuel(id, data, SVGcontainer){
-
-            let gCarosuel = SVGcontainer.append('g')
-                .attr('class', 'carosuel')
-                .attr('id', id)
-
-            let gSlots = gCarosuel.selectAll('g.' + id)
-                .data(data)
-                .join('g')
-                .attr("id", d => d.title)
-                .attr("transform", (d, i) => {
-                    let x = 0
-                    let y = 15 * i
-                    return getTranslateString(x, y)
-                })
-            
-            gSlots.append('text')
-                .text(d => d.title)
-                .style('font-family', 'tahoma')
-                .style('font-size', '14px')
-                .attr('y', 14 / 2)
-
-
-            return gCarosuel
         
-        }
-
         function createPersonaCarosuel(){
             
             function getPersonaData(){
@@ -66,8 +43,8 @@ window.onload = function (){
                 ]
             }
 
-            let personaData = getPersonaData()
-            return createCarosuel('persona', personaData, menuSVG)
+            personaData = getPersonaData()
+            return new dial (menuSVG, 'persona', personaData)
         }
 
         function createDomainCarosuel(){
@@ -80,11 +57,10 @@ window.onload = function (){
                 ]
             }
 
-            let domainData = getDomainData()
-            return createCarosuel('domain', domainData, menuSVG)
+            domainData = getDomainData()
+            return createCarosuel(menuSVG, 'domain', domainData)
         }
 
-        
         let personaCarosuel = createPersonaCarosuel()
         let domainCarosuel = createDomainCarosuel()
 
@@ -147,3 +123,4 @@ class domain {
 function getTranslateString(x, y){
     return 'translate(' + x + ',' + y + ')'
 }
+
