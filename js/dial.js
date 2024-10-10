@@ -30,9 +30,11 @@ class dial {
     }
 
     #renderItems(){
+
+        let selectedIndex = undefined
         
         try {
-            const selectedIndex = this.getSelectedItemIndex();
+            selectedIndex = this.getSelectedItemIndex();
         
         } catch {
             const firstTitle = this.items[0].title
