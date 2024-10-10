@@ -1,5 +1,5 @@
 
-window.onload = function (){
+wwindow.onload = function (){
 
     function createMenu(){
 
@@ -48,6 +48,8 @@ window.onload = function (){
                 .text(d => d.title)
                 .style('font-family', 'tahoma')
                 .style('font-size', '14px')
+                .attr('y', 14 / 2)
+
 
             return gCarosuel
         
@@ -86,21 +88,36 @@ window.onload = function (){
         let personaCarosuel = createPersonaCarosuel()
         let domainCarosuel = createDomainCarosuel()
 
-        function setDomainCarosuelPosition(){
-            let widths = []        
+        function getCarosuelWidestPoint(carosuel){
+            
+            const widths = []        
 
-            personaCarosuel.selectAll('text').each(function(d, i) {
+            carosuel.selectAll('text').each(function(d, i) {
                 const width = parseInt(Math.round(d3.select(this).node().getBBox().width))
                 widths.push(width)
             });
 
-            let x = d3.max(widths) + 3
+            return d3.max(widths)
+        }
+
+        function setDomainCarosuelPosition(){
+            let x = getCarosuelWidestPoint(personaCarosuel) + 3
             let y = 0
 
             domainCarosuel.attr('transform', getTranslateString(x, y))
-
         }
 
+        function setPersonaCarosuelPosition(){
+
+            let widestPoint = getCarosuelWidestPoint(personaCarosuel)
+
+            personaCarosuel.selectAll('text')
+                .attr('x', widestPoint)
+                .attr("text-anchor", "end") // Right-align
+
+        }
+        
+        setPersonaCarosuelPosition()
         setDomainCarosuelPosition()
 
     }
