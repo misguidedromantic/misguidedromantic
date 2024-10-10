@@ -28,72 +28,64 @@ window.onload = function (){
         const menuDiv = createMenuDiv()
         const menuSVG = createMenuSVG()
 
-        function createCarosuelGroup(){
-            menuSVG.append('g.carosuel')
+        function createCarosuel(id, data, SVGcontainer){
+
+            let gCarosuel = SVGcontainer.append('g')
+                .attr('class', 'carosuel')
+                .attr('id', id)
+
+            let gSlots = gCarosuel.selectAll('g.' + id)
+                .data(data)
+                .join('g')
+                .attr("id", d => d.title)
+            
+            gSlots.append('text')
+                .text(d => d.title)
+                .style('font-family', 'tahoma')
+                .style('font-size', '14px')
         
         }
+
+        function createPersonaCarosuel(){
+            
+            function getPersonaData(){
+                return [
+                    new persona ("aimless analyst"),
+                    new persona ("misguided romantic"),
+                    new persona ("james parry"),
+                    new persona ("dynastic observer")
+                ]
+            }
+
+            let personaData = getPersonaData()
+            return createCarosuel('persona', personaData, menuSVG)
+        }
+
+        function createDomainCarosuel(){
+            
+            function getDomainData(){
+                return [
+                    new domain ("garden"),
+                    new domain ("songs"),
+                    new domain ("journeys")
+                ]
+            }
+
+            let domainData = getDomainData()
+            return createCarosuel('domain', domainData, menuSVG)
+        }
+
         
+        let personaCarosuel = createPersonaCarosuel()
+        let domainCarosuel = createDomainCarosuel()
+
+        console.log(personaCarosuel.selectAll('text').node().getBBox().width)
+
     }
     
     
     createMenu()
 
-}
-
-
-
-
-
-
-
-function setup(){
-
-    function getPersonaData(){
-        return [
-            new persona ("aimless analyst"),
-            new persona ("misguided romantic"),
-            new persona ("james parry"),
-            new persona ("dynastic observer")
-        ]
-    }
-
-    function getDomainData(){
-        return [
-            new domain ("garden"),
-            new domain ("songs"),
-            new domain ("journeys")
-        ]
-    }
-
- 
-    function getSVG(){
-        return d3.select('#navigation')
-            .append('svg')
-            .attr('height', '80px')
-            .attr('width', '800px');
-    }
-
-    const personas = getPersonaData()
-    //const domains = getDomainData()
-    const svg = getSVG()
-
-    function getTranslate(d, i){
-        let x = 0
-        let y = i * 30 + 20
-        return 'translate(' + x + ',' + y + ')'
-    }
-    
-    let gPersona = svg.selectAll('g.persona')
-        .data(personas)
-        .join('g')
-        .attr("id", d => d.title)
-        .attr('transform', getTranslate)
-    
-    gPersona.append('text')
-        .text(d => d.title)
-        .style('font-family', 'tahoma')
-        .style('font-size', '14px')
-        .style('font-weight', 'bold');
 }
 
 class persona {
@@ -114,11 +106,6 @@ class domain {
 
 }
 
-function getScreenDimensions(){
-
-    return {
-        width: window.innerWidth,
-        height: window.innerHeight
-    }
-
+function getTranslateString(x, y){
+    return 'translate(' + x + ',' + y + ')'
 }
