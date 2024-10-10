@@ -84,7 +84,7 @@ window.onload = function (){
         let widths = []        
 
         personaCarosuel.selectAll('text').each(function(d, i) {
-            const width = Math.round(d3.select(this).node().getBBox().width)
+            const width = parseInt(Math.round(d3.select(this).node().getBBox().width))
             widths.push(width)
         });
 
