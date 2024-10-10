@@ -84,10 +84,12 @@ window.onload = function (){
         let widths = []        
 
         personaCarosuel.selectAll('text').each(function(d, i) {
-            widths.push(d3.select(this).node().getBBox().width)
+            const width = Math.round(d3.select(this).node().getBBox().width)
+            widths.push(width)
         });
 
-       console.log(Math.max(widths))
+        console.log(widths)
+        console.log(Math.max(widths))
     }
     
     createMenu()
