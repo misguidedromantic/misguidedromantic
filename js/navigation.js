@@ -89,7 +89,8 @@ window.onload = function (){
         });
 
         console.log(widths)
-        console.log(Math.max(widths))
+        
+        console.log(d3.max(widths))
     }
     
     createMenu()
