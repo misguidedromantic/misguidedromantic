@@ -43,6 +43,8 @@ window.onload = function (){
                 .text(d => d.title)
                 .style('font-family', 'tahoma')
                 .style('font-size', '14px')
+
+            return gCarosuel
         
         }
 
