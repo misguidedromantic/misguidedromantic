@@ -1,5 +1,5 @@
 
-wwindow.onload = function (){
+window.onload = function (){
 
     function createMenu(){
 
