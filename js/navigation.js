@@ -79,10 +79,16 @@ window.onload = function (){
         let personaCarosuel = createPersonaCarosuel()
         let domainCarosuel = createDomainCarosuel()
 
-        console.log(personaCarosuel.selectAll('text').node().getBBox().width)
+        let widths = []        
+
+        personaCarosuel.selectAll('text').each(function(d, i) {
+            widths.push(d3.select(this).node().getBBox().width)
+
+        });
+
+        console.log(widths)
 
     }
-    
     
     createMenu()
 
