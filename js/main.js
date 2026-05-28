@@ -1,7 +1,274 @@
-//events
+const width = 635
+const height = 889
+
 window.onload = () => {
-    const displayOrchestrator = new DisplayOrchestrator()
-    displayOrchestrator.requestView('WikiPage')
+    //const displayOrchestrator = new DisplayOrchestrator()
+    //displayOrchestrator.requestView('WikiPage')
+
+    const main = d3.select('body').append('main').style('padding', '50px')
+    const svg = main.append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .style('background-color', Colours.backgroundRaised)
+    
+        rectCanvas(svg)
+        //forceTest(svg)
+        //songTilesTest(svg)
+}
+
+class Phrase {
+
+    notes = []
+
+    constructor(divisionScheme, key){
+        this.divisionScheme = divisionScheme
+        this.key = key
+    }
+
+    get anchor(){
+        return this.notes.find(d => d.constructor.name === 'Anchor')
+    }
+
+}
+
+
+
+class MelodyNote {
+    constructor(pitch, metricPosition){
+        this.pitch = pitch
+        this.metricPosition = metricPosition
+        this.chomaticFlats = ['a','bb','b','c','db','d','eb','e','f','gb','g','ab']
+    }
+
+    get pianoKeyNumber(){
+        return this.octaveNumber * 12 + this.pitchClassNumber
+    }
+
+    get pitchClassNumber(){
+        return parseInt(this.chomaticFlats.findIndex(elem => elem === this.pitchClass))
+    }
+
+    get pitchClass(){
+        return this.pitch.substring(0, this.digitIndex)
+    }
+
+    get octaveNumber(){
+        return parseInt(this.pitch.substring(this.digitIndex))
+    }
+
+    get digitIndex(){
+        return this.pitch.search(/\d/)
+    }
+
+}
+
+class Anchor extends MelodyNote {
+
+}
+
+class MetricPosition {
+    constructor(beat, subdivision, tick){
+
+    }
+}
+
+function rectCanvas(svg){
+    const maxColumns = Math.round(width / 11) - 1
+    const maxRows = Math.round(height / 11) -1
+    const squareCount = maxColumns * maxRows
+    const nodes = new Array(squareCount).fill('sq')
+
+
+    const getRow = (i) => Math.floor(i / maxColumns);
+    const getCol = (i) => i % maxColumns
+
+
+    svg.selectAll('rect')
+        .data(nodes)
+        .join('rect')
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('fill', Colours.main)
+        .attr('opacity', 0.372)
+        .attr('x', (d, i) => {
+            return getCol(i) * 11 + 4
+        })
+        .attr('y', (d, i) => {
+            return getRow(i) * 11 + 3
+        })
+
+
+}
+
+function songTilesTest(svg){
+    
+    const divisionScheme = [4, 4]
+    const key = 'Eb'
+
+    const phraseCount = 3
+    
+    const phraseA = new Phrase(divisionScheme, key)
+    phraseA.notes = [
+        new MelodyNote('f3', -1),
+        new Anchor('g3', 0),
+        new MelodyNote('f3', 4),
+        new MelodyNote('eb3', 6)
+    ]
+    
+    const phrases = []
+    let notes = []
+    for (let i = 0; i < phraseCount; i++){
+        const phrase = new Phrase(divisionScheme, key)
+        phrase.notes = [
+            new MelodyNote('f3', -1),
+            new Anchor('g3', 0),
+            new MelodyNote('f3', 4),
+            new MelodyNote('eb3', 6)
+        ]
+        phrase.notes.forEach(note => {note.phraseIndex = i})
+
+        notes = [...notes, ...phrase.notes]
+        phrases.push(phrase)
+    }
+
+
+
+    svg.selectAll('rect')
+        .data(notes)
+        .join('rect')
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('fill', Colours.main)
+        .attr('opacity', d => d.constructor.name === 'Anchor' ? 1 : 0.618)
+        .attr('x', (d, i) => {
+            let x = 11
+            if(d.metricPosition < 0){
+                x = x - d.metricPosition * 3}
+            else {
+                x = x + d.metricPosition * 3
+            }
+            return x + parseInt(d.phraseIndex * 11)
+        })
+        .attr('y', d => {
+            const ratio = Math.floor(height / 88)
+         
+            return (88 - d.pianoKeyNumber) * ratio
+        })
+
+
+}
+
+
+function forceTest(svg){
+    
+
+    const progressionA = ['Ab', 'Bb', 'Eb', 'Bb']
+    const progressionB = ['Ab', 'G', 'Fm', 'DbVII', 'Gb', 'Ab', 'Db', 'Db']
+    const progressionC = ['Gb', 'Ab', 'Db', 'Gb']
+
+    
+
+
+
+
+    const nodes = [
+        {chord: 'Ab', nns: 4, ratio: 0.33},
+        {chord: 'Bb', nns: 5, ratio: 0.5},
+        {chord: 'Eb', nns: 1, ratio: 0},
+        {chord: 'Ab', nns: 4, ratio: 0.33},
+        {chord: 'Ab', nns: 4, ratio: 0.33},
+        {chord: 'Bb', nns: 5, ratio: 0.5},
+        {chord: 'Eb', nns: 1, ratio: 0},
+        {chord: 'Ab', nns: 4, ratio: 0.33}
+    ]
+
+    const chordCoords = {
+        G: {x: width / 2 / 7 * 5, y: height / 6 * 1},
+        Gb: {x: width / 2 / 7 * 4, y: height / 6 * 4},
+        DbVII: {x: width / 2 / 7 * 4, y: height / 6 * 4},
+        DbI: {x: width / 2 / 7 * 4, y: height / 6 * 4},
+        Ab: {x: width / 2 / 7 * 4, y: height / 6 * 4},
+        Fm: {x: width / 2 / 7 * 4, y: height / 6 * 4},
+        Eb: {x: 0, y: height / 2},
+        Bb: {x: width / 2 / 7 * 5, y: height / 6 * 2}
+    }
+
+    const links = [
+        {source: 0, target: 1},
+        {source: 1, target: 2},
+        {source: 2, target: 3},
+        {source: 4, target: 5},
+        {source: 5, target: 6},
+        {source: 6, target: 7}
+    ]   
+
+
+    const simulation = d3.forceSimulation(nodes)
+        //.force('center', d3.forceCenter(width / 2, height / 2).strength(1))
+        //.force('charge', d3.forceManyBody().strength(0))
+        .force('x', d3.forceX()
+            .x(function(d){return chordCoords[d.chord].x})
+            .strength(d => 0.08 - d.nns / 100)
+        )
+        .force('y', d3.forceY()
+            .y(function(d){return chordCoords[d.chord].y})
+            .strength(0.1)
+        )
+        .force('collision', d3.forceCollide()
+            .radius(5)
+            .strength(1)
+        )
+        .force('link', d3.forceLink()
+            .links(links)
+            .distance(-5)
+            .strength(1)
+        )
+       
+    
+
+    const node = svg.selectAll('rect')
+        .data(nodes)
+        .join('rect')
+        .attr('width', 10)
+        .attr('height', 10)
+        .attr('fill', Colours.main)
+        .attr('opacity', d => 1 - d.ratio)
+
+
+    simulation.on('tick', () => {
+        node.attr('x', d => d.x).attr('y', d =>d.y)
+
+    })
+}
+
+
+class Chord {
+    clockPosition = 1
+
+    constructor(key){
+        this.key = key
+        this.xUnit = width / 9
+        this.yUnit = height / 9
+    }
+
+    get tonicRatio(){
+
+    }
+
+
+    get tonalCentre(){
+
+
+
+        return {
+            x: this.clockPosition 
+        }
+    }
+}
+
+class Eb extends Chord {
+    clockPosition = 9
+
 }
 
 function handleNoteLinkClick(elem, controller){
@@ -36,6 +303,10 @@ class DisplayOrchestrator {
             switch(viewType){
                 case 'WikiPage':
                     this.viewController = new WikiController()
+                    break;
+                case 'List':
+                    this.viewController = new ListController()
+                    break
             }
 
             this.viewController.processRequest(contentSelection)
@@ -70,6 +341,10 @@ class WikiController {
     loadNav(structure, layout){
         const navModel = this.composeNavModel()
         this.renderNav(navModel, structure.svg, layout)
+    }
+
+    loadList(){
+
     }
 
     async composeNoteModel(title){
@@ -186,8 +461,6 @@ class WikiController {
             .style('user-select', 'none')
             .style('text-anchor', 'middle')
 
-        const fn = this.processRequest
-
         g.on('mouseover', function(){
             const item = d3.select(this)
             item.select('rect.option').attr('fill', '#6E7271')
@@ -203,6 +476,8 @@ class WikiController {
         .on('click', function(event, d){
             if(d.text === 'Random Note'){
                 controller.processRequest()
+            } else if (d.text === 'List'){
+
             }
             
         })
@@ -217,6 +492,16 @@ class WikiController {
         }) */
     }
 
+}
+
+class ListController {
+    processRequest(requestedNoteTitle){
+        this.clearCurrentNote()
+        const composer = this.composeView()
+        this.loadNewNote(requestedNoteTitle, composer.structure)
+        this.loadNav(composer.structure, composer.layout.navLayout)
+        
+    }
 }
 
 class NavOption {
@@ -293,6 +578,7 @@ class ListStyling extends Styling {
 class Structure {
     #siteNav = null
     #main = null
+    #svg = null
 
     get body(){
         return d3.select('body')
@@ -303,6 +589,13 @@ class Structure {
             this.#main = this.getSelection('main')
         }
         return this.#main
+    }
+
+    get svg(){
+        if(!this.#svg){
+            this.#svg = this.getSelection('svg', this.nav)
+        }
+        return this.#svg
     }
 
     get siteNav() {
@@ -335,7 +628,6 @@ class WikiStructure extends Structure {
     #list = null
     #nav = null
     #section = null
-    #svg = null
 
     get article() {
         if(!this.#article){
@@ -365,13 +657,6 @@ class WikiStructure extends Structure {
             this.#nav = this.getSelection('nav', this.main)
         }
         return this.#nav
-    }
-
-    get svg(){
-        if(!this.#svg){
-            this.#svg = this.getSelection('svg', this.nav)
-        }
-        return this.#svg
     }
 
 
@@ -494,6 +779,26 @@ class NavLayout extends Layout {
 }
 
 class ListLayout extends Layout {
+
+    get width(){
+        return this.grid.columnWidth * 4 + this.grid.gutterWidth * 3
+    }
+
+    get height(){
+        return this.lineHeight + this.padding
+    }
+
+    get margin(){
+        return 0
+    }
+
+    get padding (){
+        return 0.382 * this.lineHeight
+    }
+
+    get left(){
+        return this.grid.margin
+    }
 
 }
 
