@@ -2,16 +2,18 @@ const width = 635
 const height = 889
 
 window.onload = () => {
+    gravityTest()
+
     //const displayOrchestrator = new DisplayOrchestrator()
     //displayOrchestrator.requestView('WikiPage')
 
-    const main = d3.select('body').append('main').style('padding', '50px')
+/*     const main = d3.select('body').append('main').style('padding', '50px')
     const svg = main.append('svg')
         .attr('width', width)
         .attr('height', height)
-        .style('background-color', Colours.backgroundRaised)
+        .style('background-color', Colours.backgroundRaised) */
     
-        rectCanvas(svg)
+        //rectCanvas(svg)
         //forceTest(svg)
         //songTilesTest(svg)
 }
@@ -30,8 +32,6 @@ class Phrase {
     }
 
 }
-
-
 
 class MelodyNote {
     constructor(pitch, metricPosition){
@@ -72,18 +72,207 @@ class MetricPosition {
     }
 }
 
+function gravityTest(rows = 55, cols = 30){
+    const sideLen = 15
+    const gap = 1
+    const width = cols * sideLen + (cols - 1) * gap
+    const height = rows * sideLen + (rows - 1) * gap
+    
+    const main = d3.select('body').append('main').style('padding', '50px')
+    const svg = main.append('svg')
+        .attr('width', width)
+        .attr('height', height)
+        .style('background-color', Colours.backgroundRaised)
+
+
+    const getNodeData = (count) => {
+        return Array.from({length: count},() => ({weight: 0}))
+    }
+
+    const nodeData = getNodeData(rows * cols)
+
+    
+    nodeData[99].weight = 2
+    nodeData[370].weight = 1
+
+    
+    const getRow = (i) => Math.floor(i / cols);
+    const getCol = (i) => i % cols
+    
+
+    const nodeIndex = (row, col) => {
+        const validRow = row >= -1 && row < rows
+        const validCol = col >= -1 && col < cols
+        return (validRow && validCol) ? (row * cols + col) : null
+    }
+
+    const nodePull = (index) => {
+        try{return nodes[index].weight}
+        catch{return 0}
+    }
+
+    const getAdjacentPull = (indices) => {
+        let pull = 0
+        indices.forEach(index => {
+            if(index !== null){
+                pull = pull + nodePull(index)
+            }
+        })
+        return pull
+    }
+
+    const surroundingPull = (rowThis, colThis) => {
+
+        const rowAbove = rowThis - 1
+        const rowBelow = rowThis + 1
+        const colLeft = colThis - 1
+        const colRight = colThis + 1
+
+        const indicesAbove = [
+            nodeIndex(rowAbove, colLeft),
+            nodeIndex(rowAbove, colThis),
+            nodeIndex(rowAbove, colRight)
+        ]
+
+        const indicesBelow = [
+            nodeIndex(rowBelow, colLeft),
+            nodeIndex(rowBelow, colThis),
+            nodeIndex(rowBelow, colRight)
+        ]
+
+        const indicesLeft = [
+            nodeIndex(rowAbove, colLeft),
+            nodeIndex(rowThis, colLeft),
+            nodeIndex(rowBelow, colLeft)
+        ]
+
+        const indicesRight = [
+            nodeIndex(rowAbove, colRight),
+            nodeIndex(rowThis, colRight),
+            nodeIndex(rowBelow, colRight),
+        ]
+
+        return {
+            xPull: - getAdjacentPull(indicesLeft) + getAdjacentPull(indicesRight),
+            yPull: - getAdjacentPull(indicesAbove) + getAdjacentPull(indicesBelow)
+        }
+
+    }
+
+    const pull = (i) => {
+        return surroundingPull(getRow(i), getCol(i))
+    }
+
+    const nodes = nodeData.map(d => Object.create(d))
+
+    const node = svg.selectAll('rect')
+        .data(nodes)
+        .join('rect')
+        .attr('width', sideLen)
+        .attr('height', sideLen)
+        .attr('fill', Colours.main)
+        .attr('opacity', d => {
+            return d.weight > 0 ? d.weight / 6 : 0.1
+        })
+        .attr('x', (d, i) => {
+            return getCol(i) * (sideLen + gap)
+        })
+        .attr('y', (d, i) => {
+            return getRow(i) * (sideLen + gap)
+        })
+
+
+    const simulation = d3.forceSimulation(nodes)
+        //.force('collision', d3.forceCollide().radius(sideLen / 2))
+        .force('x', d3.forceX(function(d, i){
+            if(Math.abs(pull(i).xPull) > 0){
+                return (getCol(i) + pull(i).xPull) * (sideLen + gap)
+            } else { return getCol(i) * (sideLen + gap)}
+        }))
+        .force('y', d3.forceY(function(d, i){
+            if(Math.abs(pull(i).yPull) > 0){
+                return (getRow(i) + pull(i).yPull) * (sideLen + gap)
+            } else { return getRow(i) * (sideLen + gap)}
+        }))
+
+    simulation.on('tick', () => {
+        node.attr('x', d => d.x).attr('y', d => d.y)
+    })
+}
+
 function rectCanvas(svg){
-    const maxColumns = Math.round(width / 11) - 1
-    const maxRows = Math.round(height / 11) -1
+    const maxColumns = 10 //Math.round(width / 11) - 1
+    const maxRows = 10 //Math.round(height / 11) -1
     const squareCount = maxColumns * maxRows
-    const nodes = new Array(squareCount).fill('sq')
-
-
+    const nodes = new Array(squareCount).fill({weight: 0})
+    nodes[14].weight = 1
+    
     const getRow = (i) => Math.floor(i / maxColumns);
     const getCol = (i) => i % maxColumns
 
+    const getPos = (i) => {
+        return{
+            row: getRow(i),
+            col: getCol(i)
+        }
+    }
 
-    svg.selectAll('rect')
+    const getNeighbours = (i) => {
+        const index = (direction, i) => {
+            switch(direction){
+                case 'N':
+                    return i - maxColumns
+                case 'NE':
+                    return i - maxColumns + 1
+                case 'E':
+                    return i + 1
+                case 'SE':
+                    return i + maxColumns + 1
+                case 'S':
+                    return i + maxColumns
+                case 'SW':
+                    return i + maxColumns - 1
+                case 'W':
+                    return i - 1
+                case 'NW':
+                    return i - maxColumns - 1
+            }
+        }
+
+        }
+
+        const N = (i) => {
+
+            return col > -1 && col < getCol(i) ? col : null
+        }
+        
+        const w = (i) => {
+            const col = getCol(i - 1)
+            return col > -1 && col < getCol(i) ? col : null
+        }
+
+        console.log(w(i))
+    
+
+
+/*     const simulation = d3.forceSimulation(nodes)
+        .force('x', d3.forceX()
+            .x(function(d, i){
+                return Math.floor(getCol(i) * 11 + 4)
+            })
+            //.strength(1)
+        )
+        .force('y', d3.forceY()
+            .y(function(d, i){return d.weight + 1})
+            //.strength(1)
+        ) */
+
+
+
+    
+
+
+    const node = svg.selectAll('rect')
         .data(nodes)
         .join('rect')
         .attr('width', 10)
@@ -91,12 +280,26 @@ function rectCanvas(svg){
         .attr('fill', Colours.main)
         .attr('opacity', 0.372)
         .attr('x', (d, i) => {
+            console.log(getNeighbours(i))
             return getCol(i) * 11 + 4
         })
         .attr('y', (d, i) => {
             return getRow(i) * 11 + 3
         })
 
+/*     simulation.on('tick', () => {
+
+        node.attr('x', (d, i) => {
+            console.log(parseInt(d.x))
+            //return d.x
+            return getCol(i) * 11 + 4
+        })
+        .attr('y', (d, i) => {
+            return getRow(i) * 11 + 3
+        })
+        //node.attr('x', d => d.x).attr('y', d =>d.y)
+
+    }) */
 
 }
 
@@ -157,7 +360,6 @@ function songTilesTest(svg){
 
 
 }
-
 
 function forceTest(svg){
     
@@ -240,7 +442,6 @@ function forceTest(svg){
 
     })
 }
-
 
 class Chord {
     clockPosition = 1
@@ -510,8 +711,6 @@ class NavOption {
         this.fnToCall = fnToCall
     }
 }
-
-
 
 class ViewComposer {
     constructor(structure, layout, styling){ 
