@@ -1,30 +1,144 @@
 const width = 635
 const height = 889
 
+
 window.onload = () => {
-    gravityTest()
 
-    //const displayOrchestrator = new DisplayOrchestrator()
-    //displayOrchestrator.requestView('WikiPage')
+    const builder = new ComponentBuilder()
+    builder.setupContainer(new ArtCardStructure(), new ArtCardLayout(), new ArtCardStyling())
 
-/*     const main = d3.select('body').append('main').style('padding', '50px')
-    const svg = main.append('svg')
-        .attr('width', width)
-        .attr('height', height)
-        .style('background-color', Colours.backgroundRaised) */
-    
-        //rectCanvas(svg)
-        //forceTest(svg)
-        //songTilesTest(svg)
+    showSongArt()
+
+
 }
 
-class Phrase {
+function showSongArt(){
 
+    const motif = new Motif([1, 4, 4], 'Eb')
+    
+    motif.notes = [
+        new MelodyNote('g3', -1),
+        new MelodyNote('f3', 8),
+        new MelodyNote('eb3', 10)
+    ]
+
+    const motifVar = new Motif([2, 4, 4], 'Eb')
+
+    motifVar.notes = [
+        new MelodyNote('bb4', -1),
+        new MelodyNote('Ab3', 8),
+        new MelodyNote('g3', 10),
+        new MelodyNote('bb3', 15),
+        new MelodyNote('c3', 18)
+    ]
+
+    const phrase = new Phrase()
+
+    phrase.motifs = [motif, motif, motifVar]
+    console.log(phrase.uniquePitches)
+
+
+    
+    const phrases = Array.from({length: 25},() => (new Phrase([4, 4], 'Eb')))
+
+    
+
+}
+
+
+class ComponentBuilder{
+
+    setupContainer(structure, layout, styling){
+        structure.main
+            .style('height', layout.height + 'px')
+            .style('width', layout.width + 'px')
+            .style('margin', layout.margin + 'px')
+            .style('background-color', styling.backgroundColour)
+    }
+
+}
+
+
+function initialiseElements(display){
+    
+    const main = (container = d3.select('body')) => {
+        return container.append('main')
+    }
+
+    const div = (container = d3.select('main')) => {
+        return container.append('div')
+            .attr('class', this.display.constructor.name.toLowerCase())
+            .style('position', this.position)
+            .style('margin', this.margin + 'px')
+            .style('left', this.left + 'px')
+            .style('top', this.top + 'px')
+            .style('padding', this.padding + 'px')
+            .style('width', this.width + 'px')
+            .style('height', this.height + 'px')
+            .style('overflow', 'hidden')
+            .style('border-radius', this.borderRadius + 'px')
+            .style('box-shadow', this.boxShadow)
+            .style('background-color', this.backgroundColour)
+    }
+
+    const svg = (container = d3.select('main').select('div')) => {
+        return container.append('svg')
+            .attr('class', this.constructor.name.toLowerCase())
+            .attr('width', this.width)
+            .attr('height', this.height)
+            
+    }
+
+    return {
+        main: main(),
+        div: div()
+
+    }
+    
+}
+
+
+class Motif {
     notes = []
 
     constructor(divisionScheme, key){
         this.divisionScheme = divisionScheme
         this.key = key
+    }
+}
+
+
+
+
+class Section {
+
+    constructor(phrases){
+        this.phrases = []
+    }
+}
+
+
+
+class Phrase {
+
+    motifs = []
+
+    get pitchCounts(){
+        
+    }
+
+    get pitches (){
+        
+    }
+
+    get notes(){
+        return this.motifs.flatMap(motif => motif.notes)
+    }
+
+    get uniquePitches(){
+        
+        return [...new Set(this.notes.map(note => note.pitch))];
+
     }
 
     get anchor(){
@@ -92,8 +206,9 @@ function gravityTest(rows = 55, cols = 30){
     const nodeData = getNodeData(rows * cols)
 
     
-    nodeData[99].weight = 2
-    nodeData[370].weight = 1
+    nodeData[431].weight = 2
+    nodeData[370].weight = 2
+    nodeData[400].weight = 2
 
     
     const getRow = (i) => Math.floor(i / cols);
@@ -119,6 +234,43 @@ function gravityTest(rows = 55, cols = 30){
             }
         })
         return pull
+    }
+
+    const adjacentIndices = (row, col) => {
+        const rowAbove = rowThis - 1
+        const rowBelow = rowThis + 1
+        const colLeft = colThis - 1
+        const colRight = colThis + 1
+
+        const indicesAbove = [
+            nodeIndex(rowAbove, colLeft),
+            nodeIndex(rowAbove, colThis),
+            nodeIndex(rowAbove, colRight)
+        ]
+
+        const indicesBelow = [
+            nodeIndex(rowBelow, colLeft),
+            nodeIndex(rowBelow, colThis),
+            nodeIndex(rowBelow, colRight)
+        ]
+
+        const indicesLeft = [
+            nodeIndex(rowAbove, colLeft),
+            nodeIndex(rowThis, colLeft),
+            nodeIndex(rowBelow, colLeft)
+        ]
+
+        const indicesRight = [
+            nodeIndex(rowAbove, colRight),
+            nodeIndex(rowThis, colRight),
+            nodeIndex(rowBelow, colRight),
+        ]
+
+        return {indicesAbove, indicesBelow, indicesLeft, indicesRight}
+    }
+
+    const adjacentNodes = (row, col) => {
+        
     }
 
     const surroundingPull = (rowThis, colThis) => {
@@ -163,26 +315,34 @@ function gravityTest(rows = 55, cols = 30){
         return surroundingPull(getRow(i), getCol(i))
     }
 
+    const setWeights = (nodeData) => {
+        const heavyNodes = nodeData.filter(d => d.weight > 1)
+        for(let i = 0; i > heavyNodes.length; i++){
+
+        }
+    }
+
+
     const nodes = nodeData.map(d => Object.create(d))
 
     const node = svg.selectAll('rect')
         .data(nodes)
         .join('rect')
-        .attr('width', sideLen)
-        .attr('height', sideLen)
+        .attr('width', d => sideLen - d.weight * 2)
+        .attr('height', d => sideLen - d.weight * 2)
         .attr('fill', Colours.main)
         .attr('opacity', d => {
             return d.weight > 0 ? d.weight / 6 : 0.1
         })
         .attr('x', (d, i) => {
-            return getCol(i) * (sideLen + gap)
+            return getCol(i) * (sideLen + gap) + d.weight + pull(i).xPull
         })
         .attr('y', (d, i) => {
-            return getRow(i) * (sideLen + gap)
+            return getRow(i) * (sideLen + gap) + d.weight + pull(i).yPull
         })
 
 
-    const simulation = d3.forceSimulation(nodes)
+/*     const simulation = d3.forceSimulation(nodes)
         //.force('collision', d3.forceCollide().radius(sideLen / 2))
         .force('x', d3.forceX(function(d, i){
             if(Math.abs(pull(i).xPull) > 0){
@@ -197,7 +357,7 @@ function gravityTest(rows = 55, cols = 30){
 
     simulation.on('tick', () => {
         node.attr('x', d => d.x).attr('y', d => d.y)
-    })
+    }) */
 }
 
 function rectCanvas(svg){
@@ -751,6 +911,10 @@ class Styling {
     }
 }
 
+class ArtCardStyling extends Styling {
+
+}
+
 class WikiStyling extends Styling {
 
     get navStyling(){
@@ -822,6 +986,10 @@ class Structure {
     }
 }
 
+class ArtCardStructure extends Structure {
+
+}
+
 class WikiStructure extends Structure {
     #article = null
     #list = null
@@ -873,6 +1041,7 @@ class ListStructure extends Structure {
 
 }
 
+
 class Layout {
     constructor(){
         this.grid = new Grid()
@@ -915,6 +1084,21 @@ class Layout {
     }
 
 }
+
+class ArtCardLayout extends Layout {
+
+    #ratio = 889/635
+
+    get width(){
+        return this.grid.availabeHeight / this.#ratio
+    }
+
+    get height(){
+        return Math.min(this.grid.availabeHeight, this.width * this.#ratio)
+    }
+}
+
+
 
 class WikiLayout extends Layout {
     get navLayout(){
@@ -1560,9 +1744,12 @@ class Grid {
         return 'desktop'
     }
 
-
     get availableWidth(){
         return window.innerWidth - this.margin * 2 - this.padding * 2 - this.#cellSize
+    }
+
+    get availabeHeight(){
+        return window.innerHeight - this.margin * 2 - this.padding * 2 - this.#cellSize
     }
 
     get columnCount() {
@@ -2432,43 +2619,10 @@ async function initialiseWiki(){
     return Promise.resolve(wiki)
 }
 
-function initialiseElements(display){
-    
-    const main = (container = d3.select('body')) => {
-        return container.append('main')
-    }
 
-    const div = (container = d3.select('main')) => {
-        return container.append('div')
-            .attr('class', this.display.constructor.name.toLowerCase())
-            .style('position', this.position)
-            .style('margin', this.margin + 'px')
-            .style('left', this.left + 'px')
-            .style('top', this.top + 'px')
-            .style('padding', this.padding + 'px')
-            .style('width', this.width + 'px')
-            .style('height', this.height + 'px')
-            .style('overflow', 'hidden')
-            .style('border-radius', this.borderRadius + 'px')
-            .style('box-shadow', this.boxShadow)
-            .style('background-color', this.backgroundColour)
-    }
 
-    const svg = (container = d3.select('main').select('div')) => {
-        return container.append('svg')
-            .attr('class', this.constructor.name.toLowerCase())
-            .attr('width', this.width)
-            .attr('height', this.height)
-            
-    }
 
-    return {
-        main: main(),
-        div: div()
 
-    }
-    
-}
 
 //entities
     //person
