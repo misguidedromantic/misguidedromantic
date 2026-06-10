@@ -4,33 +4,117 @@ const height = 889
 
 window.onload = async () => {
 
-    const notes = await extractSongsData()
+    const card = getCard()
+    const song = await getSong('toiling avoiding')
+    renderSongOnCard(card, song)
+}
 
+function getCard(){
+    const card = new ArtCard(new Structure())
 
-    const main = d3.select('body').append('main').style('padding', '50px')
-    const svg = main.append('svg')
-        .attr('width', width)
-        .attr('height', height)
+    card.main.style('position', 'relative')
+        .style('width', width + 'px')
+        .style('height', height + 'px')
+        .style('padding', '50px')
+
+    card.svg.attr('width', card.width)
+        .attr('height', card.height)
         .style('background-color', Colours.backgroundRaised)
+        .style('opacity', 1)
 
+    return card
+}
 
-    const duplicatePitchCount = (pkNum, i) => {
-        return notes.slice(0, i).reduce((acc, current) => (current === pkNum ? acc + 1 : acc), 0)
+async function getSong(title){
+    const model = new DataModel()
+    const songs = await model.loadSongsData()
+    const song = songs.find(song => song.title === title)
+    await song.loadMotifsData()
+    return Promise.resolve(song)
+}
+
+function renderSongOnCard(card, song){
+
+    function renderPitchCounts(svg = card.svg, notes = song.notes){
+        
+        const pitchTally = (pkNum, i) => {
+            return notes.slice(0, i).reduce((acc, current) => (current === pkNum ? acc + 1 : acc), 0)
+        }
+
+        const highestPitch = Math.max(...notes)
+
+        svg.selectAll('rect.pitchCounter')
+            .data(notes)
+            .join('rect')
+            .attr('class', 'pitchCounter')
+            .attr('width', 10)
+            .attr('height', 10)
+            .attr('fill', Colours.main)
+            .attr('x', (d, i) => pitchTally(d, i) * 11)
+            .attr('y', d => (highestPitch - d) * 11)
     }
 
-    const highestPitch = Math.max(...notes)
+    renderPitchCounts()
 
-    svg.selectAll('rect.pitchCounter')
-        .data(notes)
-        .join('rect')
-        .attr('class', 'pitchCounter')
-        .attr('width', 10)
-        .attr('height', 10)
-        .attr('fill', Colours.main)
-        .attr('x', (d, i) => duplicatePitchCount(d, i) * 11)
-        .attr('y', d => (highestPitch - d) * 11)
+}
+
+function loadArtCard(card, song) {
 
 
+    
+
+    configureView()
+    renderPitchCounts()
+}
+
+class ArtCard {
+    #structure = null
+
+    width = 635
+    height = 889
+
+    constructor(structure){
+        this.#structure = structure
+    }
+
+    get svg(){
+        return this.#structure.svg
+    }
+
+    get main(){
+        return this.#structure.main
+    }
+
+    get aspectRatio(){
+        return this.width / this.height
+    }
+
+    get artBoxDimensions(){
+        return {
+            width: 540,
+            height: 340
+        }
+    }
+}
+
+
+class Structure {
+    #main = null
+    #svg = null
+
+    get main(){
+        if(!this.#main){
+            this.#main = d3.select('body').append('main')
+        }
+        return this.#main
+    }
+
+    get svg(){
+        if(!this.#svg){
+            this.#svg = this.main.append('svg')
+        }
+        return this.#svg
+    }
 }
 
 

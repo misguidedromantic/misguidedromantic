@@ -1,18 +1,14 @@
-class Songs {
-    #songs = null
-
-    async loadData(){
+class DataModel {
+    async loadSongsData(){
         const data = await d3.csv('./data/songs.csv')
-        this.#songs = data.map(d => new Song (d))
-        return Promise.resolve(this.songs)
-    }
-
-    get songs(){
-        return this.#songs
+        return Promise.resolve(data.map(d => new Song (d)))
     }
 }
 
+
 class Song {
+    #motifs = []
+
     constructor(d){
         this.id = d.short_title
         this.title = d.title
@@ -20,16 +16,12 @@ class Song {
         this.selected = false
     }
 
-    get lyrics(){
-        return [
-            new Line("I'm a doll and nothing more"),
-            new Line("deny all my rights"),
-            new Line("adore me and I'll want to be in your bed tonight"),
-            new Line("it takes so much to remain this high"),
-            new Line("I keep on taking, still I need you to try"),
-            new Line("cause when you're open I can feed off attention"),
-            new Line("your eyes trained on mine (on mine)")
-        ]   
+    get notes(){
+        return this.#motifs.flatMap(motif => motif.melody_pitches.split(' '))
+    }
+
+    async loadMotifsData(){
+        this.#motifs = await d3.csv('./data/motifs.csv')
     }
 }
 
