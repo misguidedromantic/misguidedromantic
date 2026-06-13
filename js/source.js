@@ -7,6 +7,29 @@ async function extractSongsData(){
     return notes
 }
 
+function getToilingArchetypes(){
+
+    const sections = () => {
+        const sectionSequence = 'A-B-A^'
+        return sectionSequence.split('-').map(section => {
+            return new Section()
+        })
+    }
+
+    const motif = {
+        id: 'm1',
+        key: 'Eb',
+        pitches: '3-2-1',
+        divisionScheme: '1-4',
+        rhythm: '1-4-6'
+    }
+
+    
+
+    
+
+}
+
 function getToilingStructure(){
 
 
